@@ -1,0 +1,163 @@
+:root {
+    --navbar-height: 60px;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+
+    height: var(--navbar-height);
+    line-height: var(--navbar-height);
+}
+
+.navbar .logo a {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--DarkPrimary);
+    transition: .5s;
+}
+
+.navbar .links {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar .links .link {
+    color: var(--Gry);
+    position: relative;
+    transition: .3s;
+}
+
+.navbar .links .link::before {
+    content: "";
+    width: 50%;
+    height: 2px;
+    position: absolute;
+    bottom: 15px;
+    left: -10px;
+    background-color: transparent;
+    transition: .3s;
+}
+
+.navbar .links .link.active,
+.navbar .links .link:hover {
+    color: var(--Text);
+}
+
+.navbar .links .link:hover::before {
+    bottom: 15px;
+    left: 0;
+    background-color: var(--DarkPrimary);
+}
+
+.navbar .links .link.active::before {
+    width: 80%;
+    bottom: 15px;
+    left: 0;
+    background-color: var(--DarkPrimary);
+}
+
+.navbar #toggle {
+    color: var(--Text);
+    background-color: transparent;
+    border: transparent;
+    font-size: 18px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.navbar .toggleNavbar {
+    display: none;
+}
+
+.navbar .CloseNavbar {
+    display: none;
+}
+
+@media (max-width: 725px) {
+    .navbar .toggleNavbar {
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .5s;
+        background-color: transparent;
+        border: none;
+        color: var(--Text);
+        cursor: pointer;
+    }
+
+    .navbar.active .links {
+        display: flex;
+    }
+    .navbar .links {
+        display: none;
+        overflow: scroll;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999999;
+        background-color: var(--bg);
+        transition: .5s;
+    }
+
+    .navbar .links .link.active::before {
+        width: 100%;
+    }
+
+    .navbar .CloseNavbar {
+        color: var(--Text) !important;
+        background-color: var(--White);
+        height: 30px;
+        width: 30px;
+
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+    }
+
+    .navbar #toggle {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        cursor: pointer;
+    }
+
+    @media (max-height: 650px) {
+        .navbar .links .link {
+            height: 6vh;
+            line-height: 6vh;
+        }
+
+        .navbar .links .link::before,
+        .navbar .links .link.active::before,
+        .navbar .links .link:hover::before {
+            display: none;
+        }
+
+    }
+}
