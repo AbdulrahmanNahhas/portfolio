@@ -1,0 +1,183 @@
+---
+title: "ESP32 Drone"
+slug: "esp32-drone"
+description: "A lightweight drone built using ESP32, controlled via a React Native app and equipped with sensors for stabilization and altitude measurement."
+cover:
+  - "/projects/esp32-drone/cover-01.png"
+icon: "/projects/esp32-drone/icon.png"
+category: "Internet of Things"
+startDate: 2025-02-11
+endDate: null
+tech: 
+  - "ESP-IDF"
+  - "React Native"
+  - "Expo.js"
+role: "Programmer (ESP-IDF + React Native)"
+status: "In Production"
+selected: true
+links:
+  website: "#"
+  repository: "#"
+  demo: "#"
+---
+
+## 🚀 Project Overview
+
+The **ESP32 Drone Project** is a lightweight, low-cost drone built around the **ESP32-WROOM-32E** microcontroller. It features real-time data processing and communication between the drone and a mobile app via Wi-Fi.
+
+The system is designed to support basic drone functions such as:
+
+- Altitude measurement using a **BMP280** sensor.
+- Orientation and motion sensing using an **MPU6500** IMU.
+- Motor control via **DRV8833** and **coreless motors**.
+- Remote control and data visualization through a **React Native app**.
+
+---
+
+## 🔧 Hardware Components
+
+- **ESP32-WROOM-32E** – The brain of the drone.
+- **MPU6500** – IMU sensor for orientation and motion sensing (SPI).
+- **BMP280** – Barometric pressure sensor for altitude estimation.
+- **DRV8833** – Dual H-Bridge motor driver to control coreless motors.
+- **Coreless Motors (7x20mm)** with **55mm Propellers**.
+- **3.0V Li-Po Battery** for power supply.
+
+---
+
+## 📱 Software Components
+
+- **ESP-IDF** – For firmware development on the ESP32.
+- **React Native + Expo** – For building the mobile control app.
+- **Wi-Fi Station Mode** – The drone hosts a local web server for real-time communication.
+
+<Tree
+  className="overflow-hidden rounded-md bg-background w-3xs py-2"
+  initialExpandedItems={[
+    "1", "3", "6", "7", "8", 
+    "11", "12",  "15", "16"
+  ]}
+>
+  <Folder element="ESP-IDF Files Structure" value="1">
+    <Folder value="2" element="build" isSelectable={false} />
+
+    <Folder value="3" element="components">
+      <Folder value="4" element="DroneController">
+        <Folder value="5" element="include" isSelectable={false}>
+          <File value="6">
+            <p>DroneController.h</p>
+          </File>
+        </Folder>
+        <File value="7">
+          <p>CMakeLists.txt</p>
+        </File>
+        <File value="8">
+          <p>DroneController.cpp</p>
+        </File>
+      </Folder>
+
+      <Folder value="9" element="MotorControl">
+        <Folder value="10" element="include" isSelectable={false} />
+        <File value="11">
+          <p>CMakeLists.txt</p>
+        </File>
+        <File value="12">
+          <p>MotorControl.cpp</p>
+        </File>
+      </Folder>
+
+      <Folder value="13" element="WebSocketServer">
+        <Folder value="14" element="include"  isSelectable={false}/>
+        <File value="15">
+          <p>CMakeLists.txt</p>
+        </File>
+        <File value="16">
+          <p>WebSocketServer.cpp</p>
+        </File>
+      </Folder>
+
+      <Folder value="17" element="WifiManager">
+        <Folder value="18" element="include" isSelectable={false} />
+        <File value="19">
+          <p>CMakeLists.txt</p>
+        </File>
+        <File value="20">
+          <p>WifiManager.cpp</p>
+        </File>
+      </Folder>
+    </Folder>
+
+    <Folder value="21" element="main">
+      <File value="22">
+        <p>CMakeLists.txt</p>
+      </File>
+      <File value="23">
+        <p>Kconfig.projbuild</p>
+      </File>
+      <File value="24">
+        <p>main.cpp</p>
+      </File>
+      <File value="25">
+        <p>main.h</p>
+      </File>
+    </Folder>
+
+    <File value="26">
+      <p>CMakeLists.txt</p>
+    </File>
+    <File value="27">
+      <p>README.md</p>
+    </File>
+    <File value="28">
+      <p>sdkconfig</p>
+    </File>
+  </Folder>
+</Tree>
+
+---
+
+## 🔌 Pin Configuration (MPU6500 - SPI Mode)
+
+<Table
+  className="w-[300px]"
+  data={{
+    headers: ["Function", "GPIO Pin"],
+    rows: [
+      ["SCLK", "18"],
+      ["MOSI", "23"],
+      ["MISO", "19"],
+      ["CS", "5"],
+    ],
+  }}
+/>
+
+---
+
+## 🛠️ Current Progress
+
+- ✅ Embedded system setup using ESP-IDF.
+- ✅ Sensor communication (MPU6500, BMP280).
+- ✅ Motor control with DRV8833.
+- ✅ Wi-Fi setup for web/mobile app communication.
+- 🚧 Stabilization logic (PID) in progress.
+- 🚧 Mobile app UI & real-time control features.
+
+---
+
+## 🧠 Learnings & Challenges
+
+Working on this drone introduced advanced concepts in embedded systems, real-time data handling, and sensor fusion. Debugging IMU data and tuning motor control was particularly challenging but rewarding.
+
+---
+
+## 🎯 Goals
+
+- Complete flight stabilization with PID or Kalman Filter.
+- Improve mobile UI and telemetry display.
+- Add safety features like emergency stop and low-battery warning.
+
+---
+
+## 📸 Gallery
+
+> Coming soon: photos and videos of the drone in action!
