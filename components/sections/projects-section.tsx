@@ -18,7 +18,7 @@ const ProjectsSection = async () => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border rounded-xl overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {featuredProjects.map((project) => (
             <ProjectCard
               key={project.slug}
@@ -28,6 +28,8 @@ const ProjectsSection = async () => {
               icon={project.icon}
               image={project.cover[0]}
               iconSize={project.iconSize}
+              category={project.category}
+              tech={project.tech}
             />
           ))}
         </div>

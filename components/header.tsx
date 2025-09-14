@@ -10,7 +10,7 @@ export default function Header() {
   const getActiveHref = () => {
     // Handle exact matches first
     if (pathname === "/") return "/";
-    if (pathname === "/about") return "/about";
+    if (pathname === "/work") return "/work";
     if (pathname === "/projects") return "/projects";
     if (pathname === "/contact") return "/contact";
 
@@ -18,7 +18,7 @@ export default function Header() {
     if (pathname.startsWith("/projects/")) return "/projects";
 
     // Handle other potential dynamic routes
-    if (pathname.startsWith("/about/")) return "/about";
+    if (pathname.startsWith("/work/")) return "/work";
     if (pathname.startsWith("/contact/")) return "/contact";
 
     // Default to home if no match
@@ -30,7 +30,7 @@ export default function Header() {
       logoAlt="Nahhas Logo"
       items={[
         { label: "Home", href: "/" },
-        { label: "About", href: "/about" },
+        { label: "Work", href: "/work" },
         { label: "Projects", href: "/projects" },
         { label: "Contact", href: "/contact" },
       ]}

@@ -16,8 +16,9 @@ export default async function Page({ params }: PageProps) {
   const { metadata, content } = getProjectBySlug(slug);
 
   return (
-    <div className="container max-w-5xl mx-auto px-6 md:px-0 py-0">
-      <div className="flex flex-col gap-y-6">
+    <div>
+      <ProjectCover src={metadata.cover} alt={`${metadata.title} Cover`} />
+      <div className="flex mx-auto px-6 md:px-0 py-0 flex-col gap-y-6 container max-w-5xl">
         <ProjectBanner
           slug={metadata.slug}
           title={metadata.title}
@@ -26,8 +27,6 @@ export default async function Page({ params }: PageProps) {
           category={metadata.category}
           description={metadata.description}
         />
-
-        <ProjectCover src={metadata.cover} alt={`${metadata.title} Cover`} />
 
         <div className="bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50">
           <ProjectMeta
@@ -41,9 +40,9 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
 
-      <Separator className="my-8" />
+      <Separator className="container max-w-5xl mx-auto  my-8" />
 
-      <article className="prose dark:prose-invert max-w-none">
+      <article className="container max-w-5xl mx-auto prose dark:prose-invert">
         <MDXRemote source={content} components={components} />
       </article>
     </div>

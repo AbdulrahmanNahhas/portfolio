@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 import * as React from "react";
@@ -23,31 +22,6 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const [loadedImages, setLoadedImages] = React.useState<Set<number>>(
-    new Set()
-  );
-  const [isInitialLoad, setIsInitialLoad] = React.useState(true);
-
-  // Load all images when component mounts
-  React.useEffect(() => {
-    if (src && src.length > 0 && isInitialLoad) {
-      const loadPromises = src.map((_, index) => {
-        return new Promise<void>((resolve) => {
-          const img = new window.Image();
-          img.onload = () => {
-            setLoadedImages((prev) => new Set([...prev, index]));
-            resolve();
-          };
-          img.onerror = () => resolve(); // Still resolve on error to not block
-          img.src = src[index];
-        });
-      });
-
-      Promise.all(loadPromises).then(() => {
-        setIsInitialLoad(false);
-      });
-    }
-  }, [src, isInitialLoad]);
 
   React.useEffect(() => {
     if (!api) {
@@ -62,68 +36,71 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
     });
   }, [api]);
 
-  return (
-    <div
-      className={cn("w-full h-fit relative rounded-xl overflow-hidden group")}
-    >
-      {src && src?.length >= 1 && (
-        <>
-          {isInitialLoad ? (
-            <div className="w-full h-64 bg-muted/20 rounded-3xl flex items-center justify-center">
-              <div className="flex flex-col items-center gap-2">
-                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                <p className="text-sm text-muted-foreground">
-                  Loading images...
-                </p>
-              </div>
-            </div>
-          ) : (
-            <Carousel
-              plugins={[
-                Autoplay({
-                  delay: 2000,
-                  jump: false,
-                  playOnInit: true,
-                  stopOnMouseEnter: true,
-                }),
-              ]}
-              setApi={setApi}
-              className="w-full rounded-3xl overflow-clip"
-            >
-              <CarouselContent className="w-full h-auto">
-                {src.map((image, index) => (
-                  <CarouselItem key={index} className="w-full h-auto">
-                    {loadedImages.has(index) ? (
-                      <Image
-                        src={image}
-                        alt={alt}
-                        width={1200}
-                        height={800}
-                        className="!w-full h-auto object-cover shadow-none !rounded-3xl"
-                        priority={index === 0} // Prioritize first image
-                      />
-                    ) : (
-                      <div className="w-full h-64 bg-muted/20 rounded-3xl flex items-center justify-center">
-                        <div className="w-6 h-6 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
-                      </div>
-                    )}
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="ml-12 rounded-l-none !bg-background cursor-pointer border-l-0 h-9" />
-              <CarouselNext className="mr-12 rounded-r-none !bg-background cursor-pointer border-r-0 h-9" />
-            </Carousel>
-          )}
-        </>
-      )}
-      <div
-        className={cn(
-          "pt-1 text-center text-sm text-muted-foreground",
-          (!src?.length || isInitialLoad) && "hidden"
-        )}
-      >
-        Image {current} of {count}
+  if (!src || src.length === 0) {
+    return (
+      <div className="w-full h-64 bg-muted/20 rounded-xl flex items-center justify-center">
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-8 h-8 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-muted-foreground">No images available</p>
+        </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="w-fit mx-auto relative group my-8 select-none">
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 4000,
+            jump: false,
+            playOnInit: true,
+            stopOnMouseEnter: true,
+            stopOnInteraction: false,
+            stopOnLastSnap: false,
+          }),
+        ]}
+        setApi={setApi}
+        className="w-fit select-none"
+        opts={{
+          loop: true,
+          align: "center",
+          skipSnaps: false,
+          dragFree: true,
+        }}
+      >
+        <CarouselContent className="w-fit select-none">
+          {src.map((image, index) => (
+            <CarouselItem key={index} className="!basis-auto w-fit select-none">
+              <div className="relative w-fit h-full flex items-center justify-center select-none">
+                <Image
+                  src={image}
+                  alt={`${alt} - Image ${index + 1}`}
+                  width={1200}
+                  height={800}
+                  className="h-96 w-auto rounded-sm select-none pointer-events-none"
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  draggable={false}
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        {src.length > 1 && (
+          <>
+            <CarouselPrevious className="left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+            <CarouselNext className="right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          </>
+        )}
+      </Carousel>
+
+      {src.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
+          {current} / {count}
+        </div>
+      )}
     </div>
   );
 };

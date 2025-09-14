@@ -1,14 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -19,12 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, Grid3X3, List, Clock } from "lucide-react";
 import { ProjectMetadataType } from "@/lib/types";
 import Image from "next/image";
-import { Avatar, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 // Define status types and their corresponding colors
 type ProjectStatus =
@@ -67,6 +59,7 @@ const statusConfig = {
 
 type FilterOption = "all" | "active" | "completed";
 type SortOption = "newest" | "oldest" | "name";
+type ViewMode = "cards" | "list";
 
 interface ProjectsTableProps {
   projects: ProjectMetadataType[];
@@ -76,6 +69,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<FilterOption>("all");
   const [sort, setSort] = useState<SortOption>("newest");
+  const [viewMode, setViewMode] = useState<ViewMode>("cards");
 
   // Filter and sort projects
   const filteredAndSortedProjects = useMemo(() => {
@@ -131,9 +125,9 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
   }, [projects, searchQuery, filter, sort]);
 
   return (
-    <div className="flex flex-col gap-0 w-full overflow-x-scroll max-w-screen md:max-w-[calc(100%-48px)] m-0 md:m-0 md:border md:rounded-2xl md:mt-0 bg-background">
+    <div className="w-full space-y-6">
       {/* Search and Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-4 p-3 border-b">
+      <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -148,110 +142,201 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             value={filter}
             onValueChange={(value) => setFilter(value as FilterOption)}
           >
-            <SelectTrigger className="w-[200px] text-start">
-              <Filter className="mr-2 h-4 w-4" />
-              <SelectValue
-                placeholder="Filter by status"
-                className="text-start"
-              />
+            <SelectTrigger className="w-[130px]">
+              <span className="flex items-center">
+                <Filter className="mr-2 size-3" />
+                <SelectValue placeholder="Filter" />
+              </span>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Projects</SelectItem>
-              <SelectItem value="active">Active Projects</SelectItem>
-              <SelectItem value="completed">Completed Projects</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="completed">Completed</SelectItem>
             </SelectContent>
           </Select>
           <Select
             value={sort}
             onValueChange={(value) => setSort(value as SortOption)}
           >
-            <SelectTrigger className="w-[150px]">
-              <SelectValue placeholder="Sort by" />
+            <SelectTrigger className="w-[130px]">
+              <span className="flex items-center">
+                <Clock className="mr-2 size-3" />
+                <SelectValue placeholder="Sort" />
+              </span>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="newest">Newest First</SelectItem>
-              <SelectItem value="oldest">Oldest First</SelectItem>
+              <SelectItem value="newest">Newest</SelectItem>
+              <SelectItem value="oldest">Oldest</SelectItem>
               <SelectItem value="name">Name</SelectItem>
             </SelectContent>
           </Select>
+          <div className="flex border rounded-lg">
+            <Button
+              variant={viewMode === "cards" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("cards")}
+              className="rounded-r-none"
+            >
+              <Grid3X3 className="h-4 w-4" />
+            </Button>
+            <Button
+              variant={viewMode === "list" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("list")}
+              className="rounded-l-none"
+            >
+              <List className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Projects Table */}
-      <Table>
-        <TableHeader>
-          <TableRow className="hover:bg-transparent">
-            <TableHead className="min-w-[240px]">Project Title</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead className="min-w-[160px]">Start Date</TableHead>
-            <TableHead className="min-w-[160px]">End Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredAndSortedProjects.map((item) => (
-            <TableRow
-              key={item.slug}
-              className="hover:bg-accent/50 transition-colors"
-            >
-              <TableCell>
-                <div className="flex items-center gap-3">
-                  {item.icon ? (
+      {/* Projects Display */}
+      {viewMode === "cards" ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 rounded-xl overflow-hidden border">
+          {filteredAndSortedProjects.map((project, index) => {
+            const totalProjects = filteredAndSortedProjects.length;
+            const isLastRow = index >= totalProjects - 3;
+            const isFirstInRow = index % 3 === 0;
+            const isSecondInRow = index % 3 === 1;
+            const isThirdInRow = index % 3 === 2;
+
+            let borderClasses =
+              "group p-3.5 rounded-none bg-background hover:bg-card transition-all duration-200 hover:shadow-sm relative";
+
+            if (isLastRow) {
+              // Last row - no bottom borders
+              if (isFirstInRow) borderClasses += " border-r";
+              else if (isSecondInRow) borderClasses += " border-r";
+              else if (isThirdInRow) borderClasses += " border-b";
+            } else {
+              // All other rows
+              if (isFirstInRow) borderClasses += " border-b border-r";
+              else if (isSecondInRow) borderClasses += " border-b border-r";
+              else if (isThirdInRow) borderClasses += " border-b";
+            }
+
+            return (
+              <Link
+                key={project.slug}
+                href={`/projects/${project.slug}`}
+                className={borderClasses}
+              >
+                <div className="flex items-start justify-end mb-0 absolute top-2.5 right-2.5">
+                  <div className="text-xs text-muted-foreground">
+                    {format(project.startDate, "MMM yyyy")}
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 mb-3">
+                  {project.icon ? (
                     <div
                       className={cn(
-                        "size-10 p-1 rounded-sm overflow-hidden border flex items-center justify-center bg-white",
-                        item.iconSize === "fit" && "p-0"
+                        "size-8 rounded-sm border bg-white p-1 flex items-center justify-center flex-shrink-0",
+                        project.iconSize === "fit" && "p-0 bg-transparent"
                       )}
                     >
                       <Image
-                        className="w-10 object-cover h-auto"
-                        src={
-                          item.icon ||
-                          `https://api.dicebear.com/7.x/initials/svg?seed=${item.slug}&backgroundType=gradientLinear`
-                        }
-                        width={72}
-                        height={72}
-                        alt={item.slug}
+                        className="w-full h-full object-contain"
+                        src={project.icon}
+                        width={32}
+                        height={32}
+                        alt={project.slug}
                       />
                     </div>
                   ) : (
-                    <Avatar className="size-10 rounded-full border flex items-center justify-center p-0 bg-transparent">
-                      <AvatarImage
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${item.slug}`}
-                        alt={item.slug}
-                        className="w-auto h-full object-contain"
-                      />
-                    </Avatar>
+                    <div className="size-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs font-medium text-muted-foreground">
+                        {project.title.charAt(0)}
+                      </span>
+                    </div>
                   )}
-                  <div className="flex flex-col">
-                    <Link
-                      href={`/projects/${item.slug}`}
-                      className="font-medium underline hover:opacity-60 transition-colors"
-                    >
-                      {item.title}
-                    </Link>
-                    <span className="mt-0.5 text-xs text-muted-foreground">
-                      {item.role}
-                    </span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-sm leading-tight truncate group-hover:text-foreground transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      {project.description}
+                    </p>
                   </div>
                 </div>
-              </TableCell>
-              <TableCell>
-                <StatusBadge status={item.status as ProjectStatus} />
-              </TableCell>
-              <TableCell>
-                <Badge variant="outline">{item.category}</Badge>
-              </TableCell>
-              <TableCell className="text-left">
-                {format(item.startDate, "dd MMMM, yyyy")}
-              </TableCell>
-              <TableCell className="text-left">
-                {item.endDate ? format(item.endDate, "dd MMMM, yyyy") : "-"}
-              </TableCell>
-            </TableRow>
+
+                <div className="flex items-center gap-2">
+                  <StatusBadge status={project.status as ProjectStatus} />
+                  <Badge variant="outline" className="text-xs">
+                    {project.category}
+                  </Badge>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="space-y-0 border rounded-lg overflow-hidden">
+          {filteredAndSortedProjects.map((project) => (
+            <Link
+              key={project.slug}
+              href={`/projects/${project.slug}`}
+              className="group block p-4 border-b last:border-b-0 hover:bg-accent/30 transition-colors duration-200"
+            >
+              <div className="flex items-center gap-4">
+                {project.icon ? (
+                  <div
+                    className={cn(
+                      "size-10 rounded-lg border bg-white p-1 flex items-center justify-center flex-shrink-0",
+                      project.iconSize === "fit" && "p-0 bg-transparent"
+                    )}
+                  >
+                    <Image
+                      className="w-full h-full object-contain"
+                      src={project.icon}
+                      width={40}
+                      height={40}
+                      alt={project.slug}
+                    />
+                  </div>
+                ) : (
+                  <div className="size-10 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {project.title.charAt(0)}
+                    </span>
+                  </div>
+                )}
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-base leading-tight truncate group-hover:text-foreground transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="flex items-center gap-2">
+                        <StatusBadge status={project.status as ProjectStatus} />
+                        <Badge variant="outline" className="text-xs">
+                          {project.category}
+                        </Badge>
+                      </div>
+                      <div className="text-sm text-muted-foreground text-right">
+                        <div>{format(project.startDate, "MMM yyyy")}</div>
+                        {project.endDate && (
+                          <div className="text-xs">
+                            {format(project.endDate, "MMM yyyy")}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
-        </TableBody>
-      </Table>
+        </div>
+      )}
     </div>
   );
 }
@@ -260,9 +345,11 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
   const config = statusConfig[status] || statusConfig.Archived;
 
   return (
-    <div className="flex items-center gap-2">
-      <Badge className={`${config.color} rounded-full`}>{config.label}</Badge>
-      <span className="sr-only">{config.description}</span>
-    </div>
+    <Badge
+      variant="secondary"
+      className={`${config.color} text-xs px-2 py-1 rounded-md`}
+    >
+      {config.label}
+    </Badge>
   );
 }

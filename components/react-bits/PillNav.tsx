@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "motion/react";
+import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 export type PillNavItem = {
   label: string;
@@ -40,6 +42,7 @@ const PillNav: React.FC<PillNavProps> = ({
 }) => {
   const resolvedPillTextColor = pillTextColor ?? baseColor;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const circleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const tlRefs = useRef<Array<gsap.core.Timeline | null>>([]);
   const activeTweenRefs = useRef<Array<gsap.core.Tween | null>>([]);
@@ -51,11 +54,16 @@ const PillNav: React.FC<PillNavProps> = ({
   const navItemsRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | HTMLElement | null>(null);
 
-  // Handle escape key to close mobile menu
+  // Handle escape key to close mobile menu and dropdown
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
+      if (e.key === "Escape") {
+        if (isMobileMenuOpen) {
+          setIsMobileMenuOpen(false);
+        }
+        if (isDropdownOpen) {
+          setIsDropdownOpen(false);
+        }
       }
     };
 
@@ -70,7 +78,28 @@ const PillNav: React.FC<PillNavProps> = ({
       document.removeEventListener("keydown", handleEscape);
       document.body.style.overflow = "unset";
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isDropdownOpen]);
+
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        isDropdownOpen &&
+        logoRef.current &&
+        !logoRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   useEffect(() => {
     const layout = () => {
@@ -315,36 +344,226 @@ const PillNav: React.FC<PillNavProps> = ({
 
       <div className="fixed top-4 z-[1002] left-1/2 -translate-x-1/2 w-full max-w-5xl px-6 lg:px-0">
         <nav
-          className={`w-full flex items-center justify-between box-border relative z-[1003] ${className}`}
+          className={`w-full flex items-start justify-between box-border relative z-[1003] ${className}`}
           aria-label="Primary"
           style={cssVars}
         >
-          {isRouterLink(items?.[0]?.href) && (
-            <Link
-              href={items[0].href}
-              aria-label="Home"
+          <div className="relative">
+            {/* Placeholder to maintain layout space */}
+            <div
+              className="inline-block"
+              style={{
+                width: isDropdownOpen ? "130px" : "var(--nav-h)",
+                height: "var(--nav-h)",
+                transition: "width 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            />
+            <motion.button
+              aria-label="Social Media Menu"
               onMouseEnter={handleLogoEnter}
-              role="menuitem"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               ref={(el) => {
                 logoRef.current = el;
               }}
-              className="rounded-full p-1.5 inline-flex items-center justify-center overflow-hidden"
-              style={{
+              className="p-1.5 inline-flex items-center justify-center absolute top-0 left-0"
+              initial={{
                 width: "var(--nav-h)",
                 height: "var(--nav-h)",
-                background: "var(--base, #000)",
+                borderRadius: "50%",
               }}
+              animate={{
+                width: isDropdownOpen ? "130px" : "var(--nav-h)",
+                height: isDropdownOpen ? "160px" : "var(--nav-h)",
+                borderRadius: isDropdownOpen ? "12px" : "50%",
+              }}
+              style={{
+                background: "var(--base, #000)",
+                transformOrigin: "top left",
+                willChange: "width, height, border-radius",
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 800,
+                damping: 50,
+                mass: 0.3,
+                velocity: 2,
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Image
-                src={"/Logo.svg"}
-                alt={logoAlt}
-                width={500}
-                height={500}
-                ref={logoImgRef}
-                className="w-full h-full object-cover block !text-primary !fill-primary"
-              />
-            </Link>
-          )}
+              <AnimatePresence mode="wait">
+                {!isDropdownOpen ? (
+                  <motion.div
+                    key="logo"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 700,
+                      damping: 35,
+                      mass: 0.2,
+                    }}
+                    className="flex items-center justify-center cursor-pointer"
+                  >
+                    <Image
+                      src={"/logo.png"}
+                      alt={logoAlt}
+                      width={500}
+                      height={500}
+                      ref={logoImgRef}
+                      className="size-8 p-0 object-cover block !text-primary !fill-primary"
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="dropdown"
+                    initial={{
+                      opacity: 0,
+                    }}
+                    animate={{
+                      opacity: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      transition: {
+                        delay: 0,
+                        duration: 0.05,
+                      },
+                    }}
+                    transition={{
+                      delay: 0.05,
+                      duration: 0.15,
+                    }}
+                    className="flex flex-col items-start justify-center gap-0 w-full h-full p-0"
+                  >
+                    <motion.div
+                      initial={{ y: 20, opacity: 0, scale: 0.8 }}
+                      animate={{ y: 0, opacity: 1, scale: 1 }}
+                      exit={{
+                        y: 20,
+                        opacity: 0,
+                        scale: 0.8,
+                        transition: {
+                          delay: 0,
+                          duration: 0.05,
+                          type: "tween",
+                        },
+                      }}
+                      transition={{
+                        delay: 0.08,
+                        type: "spring",
+                        stiffness: 1000,
+                        damping: 45,
+                        mass: 0.1,
+                      }}
+                    >
+                      <Link
+                        href="https://github.com/abdulrahmannahhas"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-start w-full gap-2 h-9 px-3 py-2 rounded-lg hover:bg-card text-primary transition-all duration-200"
+                      >
+                        <Github className="size-4" />
+                        <span className="text-sm font-medium">GitHub</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      initial={{ y: 20, opacity: 0, scale: 0.8 }}
+                      animate={{ y: 0, opacity: 1, scale: 1 }}
+                      exit={{
+                        y: 20,
+                        opacity: 0,
+                        scale: 0.8,
+                        transition: {
+                          delay: 0,
+                          duration: 0.05,
+                          type: "tween",
+                        },
+                      }}
+                      transition={{
+                        delay: 0.1,
+                        type: "spring",
+                        stiffness: 1000,
+                        damping: 45,
+                        mass: 0.1,
+                      }}
+                    >
+                      <Link
+                        href="https://linkedin.com/in/abdulrahmannahhas"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-start w-full gap-2 h-9 px-3 py-2 rounded-lg hover:bg-card text-primary transition-all duration-200"
+                      >
+                        <Linkedin className="size-4" />
+                        <span className="text-sm font-medium">LinkedIn</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      initial={{ y: 20, opacity: 0, scale: 0.8 }}
+                      animate={{ y: 0, opacity: 1, scale: 1 }}
+                      exit={{
+                        y: 20,
+                        opacity: 0,
+                        scale: 0.8,
+                        transition: {
+                          delay: 0,
+                          duration: 0.05,
+                          type: "tween",
+                        },
+                      }}
+                      transition={{
+                        delay: 0.12,
+                        type: "spring",
+                        stiffness: 1000,
+                        damping: 45,
+                        mass: 0.1,
+                      }}
+                    >
+                      <Link
+                        href="https://twitter.com/abdulrahmannahhas"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-start w-full gap-2 h-9 px-3 py-2 rounded-lg hover:bg-card text-primary transition-all duration-200"
+                      >
+                        <Twitter className="size-4" />
+                        <span className="text-sm font-medium">X (Twitter)</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      initial={{ y: 20, opacity: 0, scale: 0.8 }}
+                      animate={{ y: 0, opacity: 1, scale: 1 }}
+                      exit={{
+                        y: 20,
+                        opacity: 0,
+                        scale: 0.8,
+                        transition: {
+                          delay: 0,
+                          duration: 0.05,
+                          type: "tween",
+                        },
+                      }}
+                      transition={{
+                        delay: 0.14,
+                        type: "spring",
+                        stiffness: 1000,
+                        damping: 45,
+                        mass: 0.1,
+                      }}
+                    >
+                      <Link
+                        href="mailto:abdulrahmannahhas@gmail.com"
+                        className="flex items-center justify-start w-full gap-2 h-9 px-3 py-2 rounded-lg hover:bg-card text-primary transition-all duration-200"
+                      >
+                        <Mail className="size-4" />
+                        <span className="text-sm font-medium">Email</span>
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
 
           <div
             ref={navItemsRef}
