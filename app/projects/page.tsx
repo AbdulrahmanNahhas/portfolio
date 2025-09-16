@@ -21,9 +21,9 @@ export default async function ProjectsPage() {
   const projects = AllProjects;
 
   return (
-    <div className="container max-w-5xl mx-auto pt-24 px-6 md:px-0">
+    <div className="container max-w-5xl mx-auto pt-12 md:px-0 border-x">
       {/* Header Section */}
-      <div className="mb-8">
+      <div className="p-6 border-b">
         <h1 className="text-4xl font-bold mb-4">Projects</h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
           A collection of projects I&apos;ve built — each one reflecting
@@ -33,9 +33,11 @@ export default async function ProjectsPage() {
 
       {/* Featured Projects Section */}
       {selectedProjects.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-6">Featured</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto py-4">
+            Featured Projects
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {selectedProjects.map((project) => (
               <ProjectCard
                 key={project.slug}
@@ -55,7 +57,9 @@ export default async function ProjectsPage() {
 
       {/* All Projects Section */}
       <div>
-        <h2 className="text-2xl font-semibold mb-6">All Projects</h2>
+        <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto py-4 border-b">
+          All Projects
+        </h3>
         <Suspense fallback={<TableSkeleton />}>
           <ProjectsTable projects={projects} />
         </Suspense>

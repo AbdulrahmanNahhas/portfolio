@@ -22,11 +22,11 @@ const technologies = [
 
 const TechnologiesSection = () => {
   return (
-    <div className="relative overflow-x-hidden py-8">
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20" />
+    <div className="relative overflow-x-hidden py-4">
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20 active:rounded-[50px]" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[var(--background)] to-transparent z-20" />
 
-      <div className="flex animate-scroll hover:animate-paused gap-12 md:gap-20 w-max">
+      <div className="flex animate-scroll hover:animate-paused gap-12 md:gap-16 w-max">
         {[...technologies, ...technologies, ...technologies].map(
           (tech, index) => (
             <div
@@ -59,7 +59,7 @@ const TechnologiesSection = () => {
           }
         }
         .animate-scroll {
-          animation: scroll 60s linear infinite;
+          animation: scroll 50s linear infinite;
         }
 
         @media (min-width: 768px) {

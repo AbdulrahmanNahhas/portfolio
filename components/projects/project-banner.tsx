@@ -25,7 +25,7 @@ const ProjectBanner = ({
   return (
     <div
       className={cn(
-        "relative w-full rounded-xl p-1 overflow-hidden bg-gradient-to-br from-background/10 to-accent/5 border",
+        "relative w-full rounded-none p-1 overflow-hidden bg-gradient-to-br from-background/10 to-accent/5 border-y",
         className
       )}
     >
@@ -40,8 +40,8 @@ const ProjectBanner = ({
           {icon ? (
             <Image
               className={cn(
-                "rounded-sm size-14 p-1 bg-background border",
-                iconSize === "fit" && "p-0"
+                "rounded-sm size-14 p-1 bg-background border aspect-square",
+                iconSize === "fit" ? "p-0 bg-red-500" : "p-1 bg-white"
               )}
               src={
                 icon ||

@@ -58,19 +58,23 @@ const SkillsList = () => {
   };
 
   return (
-    <div className="text-left pt-3 md:pt-9">
-      <h3 className="text-foreground text-3xl md:text-4xl font-semibold md:mb-6">
+    <div className="text-left h-full w-full border-r">
+      <h3 className="text-foreground text-3xl md:text-4xl font-semibold sm:my-4 p-4 md:p-0 uppercase">
         What I do?
       </h3>
-      <div className="mt-4">
-        <Accordion type="single" collapsible className="space-y-4">
+      <div className="mt-0 w-full">
+        <Accordion
+          type="single"
+          defaultValue="Web Development"
+          className="space-y-0"
+        >
           {Object.entries(skills).map(([category, items]) => (
             <AccordionItem
               key={category}
               value={category}
-              className="w-full !border py-0 px-0 rounded-md [&[data-state=open]]:bg-card duration-200"
+              className="w-full !border py-0 px-0 rounded-none [&[data-state=open]]:bg-card duration-200"
             >
-              <AccordionTrigger className="cursor-target px-3 flex items-center">
+              <AccordionTrigger className="cursor-target px-3 flex items-center !rounded-none">
                 <div className="flex items-center gap-3 w-full">
                   <div className="[&>svg]:!rotate-0">
                     {CategoryIcons[category]}

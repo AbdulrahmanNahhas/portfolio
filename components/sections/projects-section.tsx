@@ -10,15 +10,15 @@ const ProjectsSection = async () => {
   }
 
   return (
-    <section className="mt-12 pt-12 border-t px-6 lg:px-0">
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          <h3 className="text-foreground text-3xl md:text-4xl font-semibold">
+    <section className="pt-5 border-t px-0">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-4">
+          <h3 className="uppercase text-foreground text-3xl md:text-6xl font-semibold text-center mx-auto">
             Featured Projects
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
           {featuredProjects.map((project) => (
             <ProjectCard
               key={project.slug}

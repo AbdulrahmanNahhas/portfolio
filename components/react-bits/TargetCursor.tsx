@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { gsap } from "gsap";
 
 export interface TargetCursorProps {
@@ -18,6 +24,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   const cornersRef = useRef<NodeListOf<HTMLDivElement>>(null);
   const spinTl = useRef<gsap.core.Timeline>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const constants = useMemo(
     () => ({
       borderWidth: 3,
@@ -37,8 +44,27 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     });
   }, []);
 
+  // Handle screen size visibility
   useEffect(() => {
-    if (!cursorRef.current) return;
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+
+    // Set initial visibility
+    setIsVisible(mediaQuery.matches);
+
+    // Handle screen size changes
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsVisible(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!cursorRef.current || !isVisible) return;
 
     const originalCursor = document.body.style.cursor;
     if (hideDefaultCursor) {
@@ -70,8 +96,8 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     gsap.set(cursor, {
       xPercent: -50,
       yPercent: -50,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
+      x: -100,
+      y: -100,
     });
 
     const createSpinTimeline = () => {
@@ -318,6 +344,8 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       window.removeEventListener("mousemove", moveHandler);
       window.removeEventListener("mouseover", enterHandler);
       window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener("mousedown", mouseDownHandler);
+      window.removeEventListener("mouseup", mouseUpHandler);
 
       if (activeTarget) {
         cleanupTarget(activeTarget);
@@ -326,7 +354,14 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
+  }, [
+    targetSelector,
+    spinDuration,
+    moveCursor,
+    constants,
+    hideDefaultCursor,
+    isVisible,
+  ]);
 
   useEffect(() => {
     if (!cursorRef.current || !spinTl.current) return;
@@ -340,6 +375,10 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       });
     }
   }, [spinDuration]);
+
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <div

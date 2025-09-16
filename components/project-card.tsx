@@ -26,9 +26,28 @@ const ProjectCard = ({
   return (
     <Link
       href={`/projects/${slug}`}
-      className="cursor-target group block p-6 border rounded-lg hover:bg-accent/30 transition-colors duration-200"
+      className="cursor-target group p-0 overflow-hidden flex flex-col gap-0 justify-between border rounded-none hover:bg-accent/30 transition-colors duration-200"
     >
-      <div className="flex items-start gap-4">
+      {/* Icon */}
+      {image && (
+        <div className="flex-shrink-0">
+          <div
+            className={cn(
+              "w-full aspect-video overflow-hidden border p-0 flex items-center justify-center",
+              iconSize === "fit" && "p-1 bg-transparent"
+            )}
+          >
+            <Image
+              src={image}
+              alt={title}
+              width={1500}
+              height={1500}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+      <div className="flex items-start gap-4 p-4">
         {/* Icon */}
         {icon && (
           <div className="flex-shrink-0">
@@ -56,12 +75,16 @@ const ProjectCard = ({
             <ArrowRight className="size-4 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0 mt-0.5" />
           </div>
 
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
+          <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
             {description}
           </p>
 
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            {category && <span>{category}</span>}
+            {category && (
+              <span className="bg-primary/10 text-primary rounded-full px-2 py-1">
+                {category}
+              </span>
+            )}
             {tech && tech.length > 0 && (
               <>
                 {category && <span>•</span>}

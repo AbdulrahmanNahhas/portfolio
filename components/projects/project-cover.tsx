@@ -48,7 +48,7 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
   }
 
   return (
-    <div className="w-fit mx-auto relative group my-8 select-none">
+    <div className="w-fit mx-auto relative group my-0 select-none">
       <Carousel
         plugins={[
           Autoplay({
@@ -66,7 +66,7 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
           loop: true,
           align: "center",
           skipSnaps: false,
-          dragFree: true,
+          dragFree: false,
         }}
       >
         <CarouselContent className="w-fit select-none">

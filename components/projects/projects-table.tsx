@@ -125,24 +125,24 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
   }, [projects, searchQuery, filter, sort]);
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full space-y-0">
       {/* Search and Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-0">
         <div className="cursor-target relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search projects..."
-            className="pl-9"
+            className="pl-9 rounded-none bg-background border-y-0"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-0">
           <Select
             value={filter}
             onValueChange={(value) => setFilter(value as FilterOption)}
           >
-            <SelectTrigger className="cursor-target w-[130px]">
+            <SelectTrigger className="cursor-target w-[130px] border-y-0 rounded-none">
               <span className="flex items-center">
                 <Filter className="mr-2 size-3" />
                 <SelectValue placeholder="Filter" />
@@ -164,7 +164,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             value={sort}
             onValueChange={(value) => setSort(value as SortOption)}
           >
-            <SelectTrigger className="cursor-target w-[130px]">
+            <SelectTrigger className="cursor-target w-[130px] border-y-0 rounded-none">
               <span className="flex items-center">
                 <Clock className="mr-2 size-3" />
                 <SelectValue placeholder="Sort" />
@@ -182,20 +182,20 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               </SelectItem>
             </SelectContent>
           </Select>
-          <div className="flex border rounded-lg">
+          <div className="flex border rounded-none">
             <Button
               variant={viewMode === "cards" ? "default" : "ghost"}
-              size="sm"
+              size="icon"
               onClick={() => setViewMode("cards")}
-              className="cursor-target rounded-r-none"
+              className="cursor-target rounded-none h-full"
             >
               <Grid3X3 className="h-4 w-4" />
             </Button>
             <Button
               variant={viewMode === "list" ? "default" : "ghost"}
-              size="sm"
+              size="icon"
               onClick={() => setViewMode("list")}
-              className="cursor-target rounded-l-none"
+              className="cursor-target rounded-none h-full"
             >
               <List className="h-4 w-4" />
             </Button>
@@ -205,7 +205,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
 
       {/* Projects Display */}
       {viewMode === "cards" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 rounded-xl overflow-hidden border">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 rounded-none overflow-hidden border">
           {filteredAndSortedProjects.map((project, index) => {
             const totalProjects = filteredAndSortedProjects.length;
             const isLastRow = index >= totalProjects - 3;
@@ -284,7 +284,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
           })}
         </div>
       ) : (
-        <div className="space-y-0 border rounded-lg overflow-hidden">
+        <div className="space-y-0 border rounded-none overflow-hidden">
           {filteredAndSortedProjects.map((project) => (
             <Link
               key={project.slug}

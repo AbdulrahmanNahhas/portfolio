@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border bg-card/30 mt-20 relative overflow-hidden">
+    <footer className="border-t border-border bg-card/30 mt-0 relative overflow-hidden max-w-5xl mx-auto border-x">
       {/* Bottom section */}
-      <div className="container p-6 mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+      <div className="container p-4 mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-4">
           <span>© 2025 Abdulrahman Nahhas</span>
           <span>•</span>

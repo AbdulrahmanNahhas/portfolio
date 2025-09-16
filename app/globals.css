@@ -41,7 +41,7 @@
 }
 
 :root {
-  --radius: 1rem;
+  --radius: 0;
   --background: oklch(0.1743 0.0227 186.98);
   --foreground: oklch(0.9185 0.0257 186.98);
   --card: oklch(0.2284 0.0384 186.98);
@@ -92,6 +92,8 @@
   @apply text-primary;
 }
 
-.cursor-target {
-  cursor: none !important;
+@media (min-width: 1024px) {
+  .cursor-target {
+    cursor: none !important;
+  }
 }

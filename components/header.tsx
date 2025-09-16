@@ -12,14 +12,14 @@ export default function Header() {
     if (pathname === "/") return "/";
     if (pathname === "/work") return "/work";
     if (pathname === "/projects") return "/projects";
-    if (pathname === "/contact") return "/contact";
+    if (pathname === "/more") return "/more";
 
     // Handle dynamic routes - if we're on a project page, highlight projects
     if (pathname.startsWith("/projects/")) return "/projects";
 
     // Handle other potential dynamic routes
     if (pathname.startsWith("/work/")) return "/work";
-    if (pathname.startsWith("/contact/")) return "/contact";
+    if (pathname.startsWith("/more/")) return "/more";
 
     // Default to home if no match
     return "/";
@@ -32,7 +32,7 @@ export default function Header() {
         { label: "Home", href: "/" },
         { label: "Work", href: "/work" },
         { label: "Projects", href: "/projects" },
-        { label: "Contact", href: "/contact" },
+        { label: "More", href: "/more" },
       ]}
       activeHref={getActiveHref()}
       className="custom-nav"
