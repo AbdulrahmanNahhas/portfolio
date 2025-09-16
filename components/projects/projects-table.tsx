@@ -128,7 +128,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
     <div className="w-full space-y-6">
       {/* Search and Filter Bar */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
+        <div className="cursor-target relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search projects..."
@@ -142,32 +142,44 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             value={filter}
             onValueChange={(value) => setFilter(value as FilterOption)}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="cursor-target w-[130px]">
               <span className="flex items-center">
                 <Filter className="mr-2 size-3" />
                 <SelectValue placeholder="Filter" />
               </span>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
+              <SelectItem className="cursor-target" value="all">
+                All
+              </SelectItem>
+              <SelectItem className="cursor-target" value="active">
+                Active
+              </SelectItem>
+              <SelectItem className="cursor-target" value="completed">
+                Completed
+              </SelectItem>
             </SelectContent>
           </Select>
           <Select
             value={sort}
             onValueChange={(value) => setSort(value as SortOption)}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="cursor-target w-[130px]">
               <span className="flex items-center">
                 <Clock className="mr-2 size-3" />
                 <SelectValue placeholder="Sort" />
               </span>
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="newest">Newest</SelectItem>
-              <SelectItem value="oldest">Oldest</SelectItem>
-              <SelectItem value="name">Name</SelectItem>
+              <SelectItem className="cursor-target" value="newest">
+                Newest
+              </SelectItem>
+              <SelectItem className="cursor-target" value="oldest">
+                Oldest
+              </SelectItem>
+              <SelectItem className="cursor-target" value="name">
+                Name
+              </SelectItem>
             </SelectContent>
           </Select>
           <div className="flex border rounded-lg">
@@ -175,7 +187,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               variant={viewMode === "cards" ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode("cards")}
-              className="rounded-r-none"
+              className="cursor-target rounded-r-none"
             >
               <Grid3X3 className="h-4 w-4" />
             </Button>
@@ -183,7 +195,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               variant={viewMode === "list" ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode("list")}
-              className="rounded-l-none"
+              className="cursor-target rounded-l-none"
             >
               <List className="h-4 w-4" />
             </Button>
@@ -202,7 +214,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             const isThirdInRow = index % 3 === 2;
 
             let borderClasses =
-              "group p-3.5 rounded-none bg-background hover:bg-card transition-all duration-200 hover:shadow-sm relative";
+              "cursor-target group p-3.5 rounded-none bg-background hover:bg-card transition-all duration-200 hover:shadow-sm relative";
 
             if (isLastRow) {
               // Last row - no bottom borders
@@ -277,7 +289,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}
-              className="group block p-4 border-b last:border-b-0 hover:bg-accent/30 transition-colors duration-200"
+              className="cursor-target group block p-4 border-b last:border-b-0 hover:bg-accent/30 transition-colors duration-200"
             >
               <div className="flex items-center gap-4">
                 {project.icon ? (

@@ -71,7 +71,10 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
       >
         <CarouselContent className="w-fit select-none">
           {src.map((image, index) => (
-            <CarouselItem key={index} className="!basis-auto w-fit select-none">
+            <CarouselItem
+              key={index}
+              className="cursor-target !basis-auto w-fit select-none"
+            >
               <div className="relative w-fit h-full flex items-center justify-center select-none">
                 <Image
                   src={image}

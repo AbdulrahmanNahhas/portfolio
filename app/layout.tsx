@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import TargetCursor from "@/components/TargetCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.className} antialiased relative`}>
+        <TargetCursor spinDuration={2} hideDefaultCursor={true} />
+
         <Header />
         {children}
         <Footer />

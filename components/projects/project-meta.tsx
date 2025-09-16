@@ -89,7 +89,7 @@ const ProjectMeta = ({
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "link" }),
-                  "text-start justify-start !px-0 !py-1 gap-2 h-auto"
+                  "cursor-target w-fit text-start justify-start !px-2 !py-1 gap-2 h-auto"
                 )}
               >
                 <Globe className="h-4 w-4" />
@@ -103,7 +103,7 @@ const ProjectMeta = ({
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "link" }),
-                  "text-start justify-start !px-0 !py-1 gap-2 h-auto"
+                  "cursor-target w-fit text-start justify-start !px-2 !py-1 gap-2 h-auto"
                 )}
               >
                 <Code className="h-4 w-4" />
@@ -117,7 +117,7 @@ const ProjectMeta = ({
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "link" }),
-                  "text-start justify-start !px-0 !py-1 gap-2 h-auto"
+                  "cursor-target w-fit text-start justify-start !px-2 !py-1 gap-2 h-auto"
                 )}
               >
                 <PlayCircle className="h-4 w-4" />

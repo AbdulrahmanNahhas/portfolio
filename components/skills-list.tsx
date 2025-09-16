@@ -68,9 +68,9 @@ const SkillsList = () => {
             <AccordionItem
               key={category}
               value={category}
-              className="w-full !border py-0 px-3 rounded-md [&[data-state=open]]:bg-card duration-200"
+              className="w-full !border py-0 px-0 rounded-md [&[data-state=open]]:bg-card duration-200"
             >
-              <AccordionTrigger className="flex items-center">
+              <AccordionTrigger className="cursor-target px-3 flex items-center">
                 <div className="flex items-center gap-3 w-full">
                   <div className="[&>svg]:!rotate-0">
                     {CategoryIcons[category]}
@@ -85,7 +85,7 @@ const SkillsList = () => {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <ul className="space-y-2 text-foreground/70 text-sm">
+                <ul className="px-3 space-y-2 text-foreground/70 text-sm">
                   {items.map((item, index) => (
                     <li key={index} className="flex items-center">
                       <span className="pl-1 text-secondary">•</span>

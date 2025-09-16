@@ -88,22 +88,10 @@
   }
 }
 
-/* Shiny text animation */
-.shiny-sec {
-  background: linear-gradient(135deg, #a476ff 25%, #eee5ff 50%, #a476ff 75%);
-  background-size: 400% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shine 3s linear infinite;
+.revealed {
+  @apply text-primary;
 }
 
-@keyframes shine {
-  0% {
-    background-position: 100% 50%;
-  }
-  30%,
-  70% {
-    background-position: 0% 50%;
-  }
+.cursor-target {
+  cursor: none !important;
 }

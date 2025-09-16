@@ -1,6 +1,26 @@
 import React from "react";
+import DecryptedText from "../DecryptedText";
 
 const HeroSection = () => {
+  // Calculate age based on birthday
+  const calculateAge = (birthDate: string) => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const age = calculateAge("2007-04-17");
+
   return (
     <section
       className="max-w-5xl mx-auto space-y-8 py-10 px-6 lg:px-0"
@@ -20,7 +40,7 @@ const HeroSection = () => {
                 target="_blank"
                 href="https://github.com/yourusername"
                 aria-label="GitHub"
-                className="text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +55,7 @@ const HeroSection = () => {
                 target="_blank"
                 href="https://linkedin.com/in/yourusername"
                 aria-label="LinkedIn"
-                className="text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +70,7 @@ const HeroSection = () => {
                 target="_blank"
                 href="mailto:your.email@example.com"
                 aria-label="Email"
-                className="text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -66,17 +86,158 @@ const HeroSection = () => {
               </a>
             </div>
           </div>
-          <p className="text-md md:text-2xl text-foreground/70">
-            I&apos;m a passionate computer science student who loves turning
-            ideas into reality through code. Currently pursuing my degree while
-            building projects that challenge me to grow as a developer. I enjoy
-            working with modern technologies and creating{" "}
-            <span className="text-secondary shiny-sec">interactive</span> web
-            experiences that make a difference. When I&apos;m not coding,
-            you&apos;ll find me exploring new frameworks, contributing to open
-            source projects, or diving deep into the latest tech trends that
-            shape our digital world.
-          </p>
+          <div className="text-md md:text-xl text-foreground/70 space-y-4">
+            <p>
+              Hello, I&apos;m{" "}
+              <DecryptedText
+                text="Abdulrahman Nahhas"
+                speed={100}
+                maxIterations={20}
+                characters="ABCD1234!?"
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />
+              , a{" "}
+              <DecryptedText
+                text={age.toString()}
+                speed={100}
+                maxIterations={20}
+                characters="0123456789"
+                className="shiny-sec font-semibold"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />
+              -year-old from Syria 🇸🇾.
+            </p>
+            <p>
+              I&apos;m a{" "}
+              <DecryptedText
+                text="student & developer"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz& "
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              👨‍💻 passionate about building both{" "}
+              <DecryptedText
+                text="web applications"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              and{" "}
+              <DecryptedText
+                text="embedded systems"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />
+              . I combine my studies with projects that challenge me to grow as
+              a full-stack and systems developer.
+            </p>
+            <p>
+              I enjoy working with{" "}
+              <DecryptedText
+                text="modern technologies"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              ⚡ — from{" "}
+              <DecryptedText
+                text="Next.js"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz."
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              to{" "}
+              <DecryptedText
+                text="ESP32 & IoT"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz& "
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              — and creating{" "}
+              <DecryptedText
+                text="interactive"
+                speed={100}
+                maxIterations={20}
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                className="revealed"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+                animateOn="view"
+                revealDirection="start"
+                sequential={true}
+                useOriginalCharsOnly={true}
+              />{" "}
+              solutions that make a difference. Beyond coding, I explore new
+              frameworks, contribute to open source, and dive deep into the
+              latest tech trends 🌟
+            </p>
+
+            <div className="flex flex-wrap gap-2 pt-2">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+                🎂 Born: April 17, 2007
+              </span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+                📍 Hims, Syria
+              </span>
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+                🎓 University Student
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
