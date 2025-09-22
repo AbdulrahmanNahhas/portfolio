@@ -85,7 +85,7 @@ const HeroSection = () => {
               </a>
             </div>
           </div>
-          <div className="text-lg text-justify sm:text-lg md:text-xl text-foreground/70 space-y-4 lg:pl-4 border-t lg:border-t-0 lg:border-l p-6">
+          <div className="text-lg text-justify sm:text-base md:text-lg !space-x-1 text-foreground/70 space-y-4 lg:pl-4 border-t lg:border-t-0 lg:border-l p-6">
             <p>
               Hello, I&apos;m{" "}
               <DecryptedText
@@ -225,14 +225,14 @@ const HeroSection = () => {
               latest tech trends 🌟
             </p>
 
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+            <div className="flex flex-wrap gap-2 pt-1">
+              <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
                 📅 Born: April 17, 2007
               </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+              <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
                 📍 Hims, Syria
               </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm">
+              <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
                 🎓 University Student
               </span>
             </div>

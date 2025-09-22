@@ -2,6 +2,7 @@ import { getAllProjects } from "@/api/get-all-projects";
 import ProjectCard from "@/components/project-card";
 import { ProjectsTable } from "@/components/projects/projects-table";
 import { Suspense } from "react";
+import { ProjectMetadataType } from "@/lib/types";
 
 // Loading skeleton for the table
 function TableSkeleton() {
@@ -14,21 +15,96 @@ function TableSkeleton() {
   );
 }
 
+// Project statistics calculation
+function calculateProjectStats(projects: ProjectMetadataType[]) {
+  const totalProjects = projects.length;
+  const completedProjects = projects.filter(
+    (p) => p.status === "Completed" || p.status === "In Production"
+  ).length;
+  const activeProjects = projects.filter(
+    (p) => p.status === "In Development" || p.status === "Planning"
+  ).length;
+  const featuredProjects = projects.filter((p) => p.selected).length;
+
+  // Get all unique technologies
+  const allTech = projects.flatMap((p) => p.tech || []);
+  const uniqueTech = [...new Set(allTech)].length;
+
+  // Calculate average project duration
+
+  return {
+    totalProjects,
+    completedProjects,
+    activeProjects,
+    featuredProjects,
+    uniqueTech,
+  };
+}
+
 export default async function ProjectsPage() {
   const AllProjects = await getAllProjects();
   const selectedProjects = AllProjects.filter((project) => project.selected);
-  // const projects = AllProjects.filter((project) => !project.selected);
   const projects = AllProjects;
 
+  const stats = calculateProjectStats(projects);
+
   return (
-    <div className="container max-w-5xl mx-auto pt-12 md:px-0 border-x">
+    <div className="container max-w-5xl mx-auto pt-10 md:px-0 border-x">
       {/* Header Section */}
-      <div className="p-6 border-b">
-        <h1 className="text-4xl font-bold mb-4">Projects</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
-          A collection of projects I&apos;ve built — each one reflecting
-          creativity, problem-solving, and growth through code and design.
-        </p>
+      <div className="max-w-5xl mx-auto">
+        <div className="p-6 border-b">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
+            Projects
+          </h1>
+          <p className="text-lg text-foreground/70 max-w-2xl leading-relaxed">
+            A collection of projects I&apos;ve built — each one reflecting
+            creativity, problem-solving, and growth through code and design.
+          </p>
+        </div>
+
+        {/* Project Statistics */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border-b">
+          <div className="border-r p-4 text-center border-b lg:border-b-0">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {stats.totalProjects}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Total Projects
+            </div>
+          </div>
+          <div className="border-r p-4 text-center border-b lg:border-b-0">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {stats.completedProjects}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Completed
+            </div>
+          </div>
+          <div className="border-r p-4 text-center border-b lg:border-b-0">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {stats.activeProjects}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Active
+            </div>
+          </div>
+          <div className="border-r p-4 text-center border-b md:border-b-0">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {stats.featuredProjects}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Featured
+            </div>
+          </div>
+          <div className="p-4 text-center border-r lg:border-r-0">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {stats.uniqueTech}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Technologies
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Featured Projects Section */}
@@ -37,7 +113,7 @@ export default async function ProjectsPage() {
           <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto py-4">
             Featured Projects
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
             {selectedProjects.map((project) => (
               <ProjectCard
                 key={project.slug}

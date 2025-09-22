@@ -132,7 +132,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search projects..."
-            className="pl-9 rounded-none bg-background border-y-0"
+            className="pl-9 rounded-none bg-background border-0 border-b md:border-0 z-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -182,7 +182,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               </SelectItem>
             </SelectContent>
           </Select>
-          <div className="flex border rounded-none">
+          <div className="hidden md:flex border rounded-none">
             <Button
               variant={viewMode === "cards" ? "default" : "ghost"}
               size="icon"
@@ -214,8 +214,9 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             const isThirdInRow = index % 3 === 2;
 
             let borderClasses =
-              "cursor-target group p-3.5 rounded-none bg-background hover:bg-card transition-all duration-200 hover:shadow-sm relative";
+              "cursor-target group p-3.5 rounded-none bg-background hover:bg-accent/50 transition-all duration-200 hover:shadow-sm relative";
 
+            // Apply borders based on screen size
             if (isLastRow) {
               // Last row - no bottom borders
               if (isFirstInRow) borderClasses += " border-r";
@@ -227,6 +228,14 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               else if (isSecondInRow) borderClasses += " border-b border-r";
               else if (isThirdInRow) borderClasses += " border-b";
             }
+
+            // Responsive border adjustments
+            // On md screens (2 columns), adjust borders
+            const isLastRowMd = index >= totalProjects - 2;
+            const isFirstInRowMd = index % 2 === 0;
+
+            if (isLastRowMd) borderClasses += " md:border-b-0";
+            if (isFirstInRowMd) borderClasses += " md:border-r";
 
             return (
               <Link
@@ -291,7 +300,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
               href={`/projects/${project.slug}`}
               className="cursor-target group block p-4 border-b last:border-b-0 hover:bg-accent/30 transition-colors duration-200"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-start gap-4">
                 {project.icon ? (
                   <div
                     className={cn(
@@ -321,7 +330,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                       <h3 className="font-medium text-base leading-tight truncate group-hover:text-foreground transition-colors">
                         {project.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                         {project.description}
                       </p>
                     </div>

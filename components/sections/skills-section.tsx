@@ -6,9 +6,9 @@ import SkillsList from "../skills-list";
 
 const SkillsSection = () => {
   return (
-    <section className="flex flex-col md:flex-row items-center gap-0 overflow-hidden border-t">
+    <section className="flex flex-col md:flex-row items-start gap-0 overflow-hidden border-t">
       <SkillsList />
-      <div className="flex justify-end w-full h-[500px]">
+      <div className="flex justify-end w-full h-[350px] border-l">
         <LetterGlitch
           glitchColors={["#008000", "#006400", "#013220"]}
           glitchSpeed={60}

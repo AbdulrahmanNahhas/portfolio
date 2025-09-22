@@ -2,7 +2,7 @@ import { WorkExperienceType } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import { MapPinIcon } from "lucide-react";
+import { MapPinIcon, ClockIcon } from "lucide-react";
 
 const workExperiences: WorkExperienceType[] = [
   {
@@ -87,6 +87,28 @@ function formatDate(date: Date): string {
   });
 }
 
+function calculateDuration(startDate: Date, endDate?: Date): string {
+  const end = endDate || new Date();
+  const diffTime = Math.abs(end.getTime() - startDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 30) {
+    return `${diffDays} days`;
+  } else if (diffDays < 365) {
+    const months = Math.floor(diffDays / 30);
+    return `${months} month${months > 1 ? "s" : ""}`;
+  } else {
+    const years = Math.floor(diffDays / 365);
+    const remainingMonths = Math.floor((diffDays % 365) / 30);
+    if (remainingMonths > 0) {
+      return `${years} year${years > 1 ? "s" : ""} ${remainingMonths} month${
+        remainingMonths > 1 ? "s" : ""
+      }`;
+    }
+    return `${years} year${years > 1 ? "s" : ""}`;
+  }
+}
+
 function getTypeColor(type: WorkExperienceType["type"]): string {
   const colors = {
     "full-time": "bg-primary text-primary-foreground",
@@ -99,16 +121,10 @@ function getTypeColor(type: WorkExperienceType["type"]): string {
   return colors[type];
 }
 
-function TimelineItem({
-  experience,
-}: // isLast,
-{
-  experience: WorkExperienceType;
-  // isLast: boolean;
-}) {
+function TimelineItem({ experience }: { experience: WorkExperienceType }) {
   return (
-    <div className="relative flex gap-6 border-b">
-      <Card className="hover:shadow-md transition-shadow duration-200 gap-4 bg-background border-0">
+    <div className="relative flex gap-6 border-b last:border-b-0">
+      <Card className="hover:bg-accent/5 transition-all duration-200 gap-4 bg-background border-0 w-full">
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             <div className="min-w-0 flex-1">
@@ -183,12 +199,18 @@ function TimelineItem({
                   <Badge variant="destructive">Current</Badge>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground">
-                {formatDate(experience.startDate)} -{" "}
-                {experience.endDate
-                  ? formatDate(experience.endDate)
-                  : "Present"}
-              </p>
+              <div className="text-right">
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(experience.startDate)} -{" "}
+                  {experience.endDate
+                    ? formatDate(experience.endDate)
+                    : "Present"}
+                </p>
+                <p className="text-xs text-foreground/50 flex items-center justify-end gap-1">
+                  <ClockIcon className="size-3" />
+                  {calculateDuration(experience.startDate, experience.endDate)}
+                </p>
+              </div>
             </div>
           </div>
         </CardHeader>
@@ -224,7 +246,9 @@ function TimelineItem({
                     key={index}
                     className="text-sm text-muted-foreground flex items-start gap-3"
                   >
-                    <span className="text-secondary mt-0 flex-shrink-0">★</span>
+                    <span className="text-secondary-foregroundmt-0 flex-shrink-0">
+                      ★
+                    </span>
                     <span>{highlight}</span>
                   </li>
                 ))}
@@ -255,6 +279,55 @@ function TimelineItem({
   );
 }
 
+// Work Statistics
+const workStats = {
+  totalExperience: "2+ years",
+  organizations: 3,
+  currentRoles: 2,
+  totalProjects: 15,
+  teamMembersLed: 25,
+  technologiesUsed: 12,
+};
+
+// Skills developed through work
+// const workSkills = [
+//   {
+//     category: "Leadership",
+//     skills: [
+//       "Team Management",
+//       "Strategic Planning",
+//       "Cross-functional Collaboration",
+//     ],
+//   },
+//   {
+//     category: "Technology",
+//     skills: [
+//       "Full-stack Development",
+//       "Database Design",
+//       "System Architecture",
+//       "Security Implementation",
+//     ],
+//   },
+//   {
+//     category: "Humanitarian",
+//     skills: [
+//       "Crisis Response",
+//       "Community Support",
+//       "Resource Management",
+//       "Stakeholder Communication",
+//     ],
+//   },
+//   {
+//     category: "Project Management",
+//     skills: [
+//       "Agile Methodologies",
+//       "Timeline Management",
+//       "Risk Assessment",
+//       "Quality Assurance",
+//     ],
+//   },
+// ];
+
 export default function WorkPage() {
   // Sort work experiences by start date (latest first)
   const sortedWorkExperiences = [...workExperiences].sort((a, b) => {
@@ -267,27 +340,121 @@ export default function WorkPage() {
   });
 
   return (
-    <div className="container max-w-5xl mx-auto pt-12 border-x">
+    <div className="min-h-screen bg-background pt-10">
       {/* Header Section */}
-      <div className="p-6 border-b">
-        <h1 className="text-4xl font-bold mb-4">Work Experience</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
-          A journey through my professional experience, from humanitarian work
-          during crisis response to building platforms for justice and
-          education. Each role has shaped my commitment to using technology for
-          meaningful impact.
-        </p>
+      <div className="max-w-5xl mx-auto border-x border-t">
+        <div className="p-6 border-b">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
+            Work Experience
+          </h1>
+          <p className="text-lg text-foreground/70 max-w-2xl leading-relaxed">
+            A journey through my professional experience, from humanitarian work
+            during crisis response to building platforms for justice and
+            education. Each role has shaped my commitment to using technology
+            for meaningful impact.
+          </p>
+        </div>
+
+        {/* Statistics Section */}
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0 border-b">
+          <div className="border-r p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.totalExperience}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Experience
+            </div>
+          </div>
+          <div className="border-r p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.organizations}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Organizations
+            </div>
+          </div>
+          <div className="border-r p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.currentRoles}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Current Roles
+            </div>
+          </div>
+          {/* <div className="border-r p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.totalProjects}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Projects
+            </div>
+          </div> */}
+          {/* <div className="border-r p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.teamMembersLed}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Team Members
+            </div>
+          </div>
+          <div className="p-4 text-center">
+            <div className="text-2xl font-bold text-foreground mb-1">
+              {workStats.technologiesUsed}
+            </div>
+            <div className="text-sm text-foreground/70 uppercase tracking-wide">
+              Technologies
+            </div>
+          </div> */}
+        </div>
+
+        {/* Skills Developed Section */}
+        {/* <div className="border-b">
+          <div className="p-6">
+            <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-6">
+              Skills Developed
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {workSkills.map((skillGroup, index) => (
+                <div key={index} className="border bg-card p-4">
+                  <h3 className="font-semibold text-foreground mb-3 uppercase tracking-wide text-sm">
+                    {skillGroup.category}
+                  </h3>
+                  <ul className="space-y-2">
+                    {skillGroup.skills.map((skill, skillIndex) => (
+                      <li
+                        key={skillIndex}
+                        className="text-sm text-foreground/70 flex items-center gap-2"
+                      >
+                        <span className="text-primary">•</span>
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div> */}
       </div>
 
       {/* Timeline */}
-      <div className="relative">
+      <div className="max-w-5xl mx-auto border-x">
         {sortedWorkExperiences.map((experience) => (
-          <TimelineItem
-            key={experience.id}
-            experience={experience}
-            // isLast={index === sortedWorkExperiences.length - 1}
-          />
+          <TimelineItem key={experience.id} experience={experience} />
         ))}
+      </div>
+
+      {/* Footer Note */}
+      <div className="max-w-5xl mx-auto border">
+        <div className="p-4 text-center">
+          <p className="text-sm text-foreground/50">
+            This timeline represents my journey in using technology for social
+            impact.
+            <br />
+            Each experience has contributed to my growth as both a developer and
+            a humanitarian.
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,46 +1,164 @@
 "use client";
 
+import React, { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import PillNav from "./react-bits/PillNav";
+import { motion } from "motion/react";
+import { navigationItems, getActiveHref } from "@/lib/navigation";
+import { LogoDropdown } from "./header/LogoDropdown";
+import { DesktopNavigation } from "./header/DesktopNavigation";
+import { MobileHamburger } from "./header/MobileHamburger";
+import { MobileBackdrop } from "./header/MobileBackdrop";
+import { MobileMenu } from "./header/MobileMenu";
 
 export default function Header() {
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLogoDropdownOpen, setIsLogoDropdownOpen] = useState(false);
+  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
 
-  // Determine the active route based on the current pathname
-  const getActiveHref = () => {
-    // Handle exact matches first
-    if (pathname === "/") return "/";
-    if (pathname === "/work") return "/work";
-    if (pathname === "/projects") return "/projects";
-    if (pathname === "/more") return "/more";
+  const activeHref = getActiveHref(pathname);
 
-    // Handle dynamic routes - if we're on a project page, highlight projects
-    if (pathname.startsWith("/projects/")) return "/projects";
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        setIsLogoDropdownOpen(false);
+        setIsMoreDropdownOpen(false);
+      }
+    };
 
-    // Handle other potential dynamic routes
-    if (pathname.startsWith("/work/")) return "/work";
-    if (pathname.startsWith("/more/")) return "/more";
+    if (isMobileMenuOpen) {
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
 
-    // Default to home if no match
-    return "/";
-  };
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
+  // Handle click outside for dropdowns
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+
+      // Close logo dropdown if clicking outside
+      if (isLogoDropdownOpen) {
+        const logoButton = document.querySelector(
+          '[aria-label="Social Media Menu"]'
+        );
+        if (logoButton && !logoButton.contains(target)) {
+          setIsLogoDropdownOpen(false);
+        }
+      }
+
+      // Close more dropdown if clicking outside
+      if (isMoreDropdownOpen) {
+        const moreButton = document.querySelector('[aria-label="More"]');
+        if (moreButton && !moreButton.contains(target)) {
+          setIsMoreDropdownOpen(false);
+        }
+      }
+
+      // Close mobile menu if clicking outside
+      if (isMobileMenuOpen) {
+        const mobileMenu = document.querySelector(
+          '[aria-label="Mobile Navigation Menu"]'
+        );
+        const hamburgerButton = document.querySelector(
+          '[aria-label="Toggle menu"]'
+        );
+        if (
+          mobileMenu &&
+          !mobileMenu.contains(target) &&
+          hamburgerButton &&
+          !hamburgerButton.contains(target)
+        ) {
+          setIsMobileMenuOpen(false);
+          setIsMoreDropdownOpen(false);
+        }
+      }
+    };
+
+    if (isLogoDropdownOpen || isMoreDropdownOpen || isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isLogoDropdownOpen, isMoreDropdownOpen, isMobileMenuOpen]);
+
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  }, [isMobileMenuOpen]);
+
+  const toggleLogoDropdown = useCallback(() => {
+    setIsLogoDropdownOpen(!isLogoDropdownOpen);
+  }, [isLogoDropdownOpen]);
+
+  const toggleMoreDropdown = useCallback(() => {
+    setIsMoreDropdownOpen(!isMoreDropdownOpen);
+  }, [isMoreDropdownOpen]);
+
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+    setIsMoreDropdownOpen(false);
+  }, []);
 
   return (
-    <PillNav
-      logoAlt="Nahhas Logo"
-      items={[
-        { label: "Home", href: "/" },
-        { label: "Work", href: "/work" },
-        { label: "Projects", href: "/projects" },
-        { label: "More", href: "/more" },
-      ]}
-      activeHref={getActiveHref()}
-      className="custom-nav"
-      ease="power2.easeOut"
-      baseColor="#002623"
-      pillColor="#968662"
-      hoveredPillTextColor="#968662"
-      pillTextColor="#002623"
-    />
+    <>
+      {/* Mobile Backdrop */}
+      <MobileBackdrop isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+
+      {/* Main Navigation */}
+      <motion.div
+        className="fixed top-0 z-[1002] left-1/2 -translate-x-1/2 w-full max-w-5xl p-0 border bg-background/80 backdrop-blur-xl"
+        initial={{ y: 0, opacity: 1 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0 }}
+      >
+        <nav
+          className="w-full flex items-start justify-between box-border relative z-[1003]"
+          aria-label="Primary"
+        >
+          {/* Logo Section */}
+          <div className="">
+            <LogoDropdown
+              isOpen={isLogoDropdownOpen}
+              onToggle={toggleLogoDropdown}
+            />
+          </div>
+
+          {/* Desktop Navigation */}
+          <DesktopNavigation
+            items={navigationItems}
+            activeHref={activeHref}
+            isMoreDropdownOpen={isMoreDropdownOpen}
+            onToggleMoreDropdown={toggleMoreDropdown}
+          />
+
+          {/* Mobile Hamburger */}
+          <MobileHamburger
+            isOpen={isMobileMenuOpen}
+            onToggle={toggleMobileMenu}
+          />
+        </nav>
+
+        {/* Mobile Menu */}
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onClose={closeMobileMenu}
+          items={navigationItems}
+          activeHref={activeHref}
+          isMoreDropdownOpen={isMoreDropdownOpen}
+          onToggleMoreDropdown={toggleMoreDropdown}
+        />
+      </motion.div>
+    </>
   );
 }

@@ -26,7 +26,7 @@ const ProjectCard = ({
   return (
     <Link
       href={`/projects/${slug}`}
-      className="cursor-target group p-0 overflow-hidden flex flex-col gap-0 justify-between border rounded-none hover:bg-accent/30 transition-colors duration-200"
+      className="cursor-target group p-0 overflow-hidden flex flex-col gap-0 justify-between border rounded-none hover:bg-accent/50 transition-colors duration-200"
     >
       {/* Icon */}
       {image && (
