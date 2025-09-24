@@ -25,7 +25,7 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
       }}
       animate={{
         width: isOpen ? "130px" : "auto",
-        height: isOpen ? "109px" : "40px",
+        height: isOpen ? "115px" : "40px",
       }}
       transition={{
         duration: 0.4,
@@ -82,7 +82,7 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
                       ? undefined
                       : "noopener noreferrer"
                   }
-                  className="flex items-center gap-3 h-9 px-3 py-2 text-white hover:bg-white/10 transition-colors duration-200"
+                  className="flex items-center gap-3 h-9.5 px-4 py-3 text-white hover:bg-white/10 transition-colors duration-0"
                 >
                   <social.icon className="size-4" />
                   <span className="text-sm font-medium">{social.label}</span>

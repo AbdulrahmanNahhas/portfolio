@@ -24,7 +24,6 @@ function calculateProjectStats(projects: ProjectMetadataType[]) {
   const activeProjects = projects.filter(
     (p) => p.status === "In Development" || p.status === "Planning"
   ).length;
-  const featuredProjects = projects.filter((p) => p.selected).length;
 
   // Get all unique technologies
   const allTech = projects.flatMap((p) => p.tech || []);
@@ -36,7 +35,6 @@ function calculateProjectStats(projects: ProjectMetadataType[]) {
     totalProjects,
     completedProjects,
     activeProjects,
-    featuredProjects,
     uniqueTech,
   };
 }
@@ -63,7 +61,7 @@ export default async function ProjectsPage() {
         </div>
 
         {/* Project Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border-b">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0 border-b">
           <div className="border-r p-4 text-center hover:bg-accent/50  border-b lg:border-b-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.totalProjects}
@@ -86,14 +84,6 @@ export default async function ProjectsPage() {
             </div>
             <div className="text-sm text-foreground/70 uppercase tracking-wide">
               Active
-            </div>
-          </div>
-          <div className="border-r p-4 text-center hover:bg-accent/50 border-b md:border-b-0">
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {stats.featuredProjects}
-            </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Featured
             </div>
           </div>
           <div className="p-4 text-center border-r hover:bg-accent/50 lg:border-r-0">

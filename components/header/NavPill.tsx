@@ -20,7 +20,7 @@ export function NavPill({ item, isActive }: NavPillProps) {
       </span>
       {isActive && (
         <span
-          className="absolute left-1/2 -bottom-1.5 -translate-x-1/2 w-3 h-2 rounded-full z-[4] bg-foreground"
+          className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-3 h-3 rounded-full z-[4] bg-foreground/50"
           aria-hidden="true"
         />
       )}
@@ -28,10 +28,10 @@ export function NavPill({ item, isActive }: NavPillProps) {
   );
 
   const basePillClasses = cn(
-    "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border border-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-4 py-2 transition-all duration-200",
-    "hover:bg-accent hover:text-accent-foreground",
+    "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border border-transparent border-l-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-6 py-2 transition-all duration-0",
+    "hover:bg-accent/50 hover:text-accent-foreground",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    isActive && "bg-accent text-accent-foreground border-foreground/25"
+    isActive && "bg-accent text-accent-foreground border-foreground/25 border"
   );
 
   const isExternalLink = (href: string) =>

@@ -38,7 +38,7 @@ export function MoreDropdown({
           aria-expanded={isOpen}
           onClick={onToggle}
           className={cn(
-            "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border border-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-4 py-2 transition-all duration-200",
+            "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border-l border-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-4 py-2 transition-all duration-200",
             "hover:bg-accent hover:text-accent-foreground",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
             isOpen && "bg-accent text-accent-foreground"
@@ -59,13 +59,13 @@ export function MoreDropdown({
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="absolute top-full right-0 mt-1 w-48 bg-card border border-border rounded-md shadow-lg z-50"
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              className="absolute top-full right-0 mt-0 w-48 bg-card border border-r-0 rounded-md shadow-lg z-50"
+              initial={{ opacity: 0, scale: 1, y: 0 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <div className="p-1">
+              <div className="p-0">
                 {moreItem.subItems.map((subItem, index) => {
                   const IconComponent = subItem.icon
                     ? iconMap[subItem.icon as keyof typeof iconMap]

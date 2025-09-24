@@ -404,8 +404,8 @@ export default function WorkPage() {
     <div className="min-h-screen bg-background pt-10">
       {/* Header Section */}
       <div className="max-w-5xl mx-auto border-x border-t">
-        <div className="p-8 border-b">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+        <div className="p-6 border-b">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 uppercase">
             Work Experience
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">

@@ -22,7 +22,7 @@ export function DesktopNavigation({
     <div className="relative items-center hidden md:flex ml-2 h-10 overflow-visible">
       <ul
         role="menubar"
-        className="list-none flex items-stretch m-0 p-1 h-full gap-1"
+        className="list-none flex items-stretch m-0 p-0 h-full gap-0"
       >
         {items.map((item) => {
           const isActive = activeHref === item.href;
