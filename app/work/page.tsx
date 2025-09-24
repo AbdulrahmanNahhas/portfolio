@@ -1,85 +1,106 @@
-import { WorkExperienceType } from "@/lib/types";
+import { WorkExperienceType, WorkStatistics, WorkType } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { MapPinIcon, ClockIcon } from "lucide-react";
 
-const workExperiences: WorkExperienceType[] = [
+// Work experience data - automatically calculates statistics
+const WORK_EXPERIENCES: WorkExperienceType[] = [
   {
     id: "1",
+    company: "NAVIGATE",
+    position: "Co-Founder & Chief Technology Officer (CTO)",
+    location: "Remote",
+    startDate: new Date("2025-10-01"),
+    description:
+      "Co-founded NAVIGATE, a Syrian consultancy that helps startups with business planning, digital tools, and technical solutions.",
+    responsibilities: [
+      "Led the technical side of the company, including websites, platforms, and infrastructure",
+      "Worked with founders to align technical solutions with business goals",
+    ],
+    type: "full-time",
+    current: true,
+    // companyUrl: "https://navigate-tech.com",
+    category: "Startup",
+    icon: "/work/navigate.png",
+  },
+  {
+    id: "2",
+    company: "New Syria Movement",
+    position: "Member",
+    location: "Syria",
+    startDate: new Date("2025-09-25"),
+    description:
+      "Joined the New Syria Movement, a political party in Syria that works on change and rebuilding the country’s future.",
+    responsibilities: [
+      "Participated as a regular member in discussions and community activities",
+    ],
+    type: "volunteer",
+    current: true,
+    companyUrl: "https://syriamovement.com",
+    category: "Other",
+    icon: "/work/New-Syria-Movement.jpg",
+  },
+  {
+    id: "3",
+    company: "Promise for Justice & Truth",
+    position: "Chief Technology Officer (CTO)",
+    location: "Homs, Syria",
+    startDate: new Date("2025-08-20"),
+    description:
+      "CTO at Promise for Justice & Truth, a human rights organization focused on documenting and addressing cases of detainees and the disappeared in Syria.",
+    responsibilities: [
+      "Built secure databases and digital infrastructure",
+      "Provided technical support for legal and research teams",
+    ],
+    highlights: ["Introduced digital security measures for sensitive records"],
+    type: "part-time",
+    current: true,
+    // companyUrl: "https://alwad.org",
+    category: "Non-profit",
+    icon: "/work/promise.png",
+  },
+  {
+    id: "4",
+    company: "Thabat Association",
+    position: "Technical & Media Lead (Volunteer)",
+    location: "Homs, Syria",
+    startDate: new Date("2024-08-01"),
+    description:
+      "Thabat – The Islamic Association for Da‘wah, Education, and Culture is a non-profit organization dedicated to Islamic education, cultural activities, and da‘wah. It focuses on spreading knowledge, providing educational programs, and supporting community development.",
+    responsibilities: [
+      "Managed technical systems and digital platforms",
+      "Led media production and digital presence",
+    ],
+    type: "volunteer",
+    current: true,
+    // companyUrl: "https://thabat.org",
+    category: "Non-profit",
+    icon: "/work/thabat.png",
+  },
+  {
+    id: "5",
     company: "Insan for Psychosocial Support",
     position: "Volunteer",
     location: "Fatih, Istanbul",
     startDate: new Date("2023-02-01"),
     endDate: new Date("2023-02-28"),
     description:
-      "First volunteer experience, providing direct humanitarian support in response to the Turkey-Syria earthquake in February 2023.",
+      "Volunteered with Insan for Psychosocial Support during the Turkey-Syria earthquake response in February 2023.",
     responsibilities: [
-      "Delivered on-site humanitarian assistance to earthquake-affected communities",
-      "Supported relief distribution including food, water, and essential supplies",
-      "Assisted with administrative and logistical tasks as needed",
+      "Assisted in distributing relief supplies and supporting affected families",
     ],
     type: "volunteer",
     current: false,
     companyUrl: "https://insanps.org",
-    teamSize: "25 volunteers",
     category: "Non-profit",
     icon: "/work/insanps.png",
   },
-  {
-    id: "2",
-    company: "Thabat Association",
-    position: "Head of Technology Department (Volunteer)",
-    location: "Homs, Syria",
-    startDate: new Date("2024-08-01"),
-    description:
-      "Leading the Technology Department at Thabat Association, overseeing all IT operations and driving digital transformation across the organization.",
-    responsibilities: [
-      "Directed all IT systems, infrastructure, and technical operations",
-      "Designed, developed, and maintained digital platforms and internal tools",
-      "Provided technical training and support for staff and volunteers",
-      "Implemented automation and digital workflows to streamline operations",
-      "Advised leadership on technology strategy, security, and innovation",
-    ],
-    type: "volunteer",
-    current: true,
-    companyUrl: "https://thabat.org", // update with real URL if available
-    teamSize: "Core tech team with cross-department collaboration",
-    category: "Non-profit",
-    icon: "/work/thabat.png",
-  },
-  {
-    id: "3",
-    company: "Promise for Truth and Justice",
-    position: "Head of Technology Department",
-    location: "Homs, Syria",
-    startDate: new Date("2025-08-20"),
-    description:
-      "Head of Technology at Promise for Truth and Justice, a human rights organization focused on documenting and addressing cases of detainees and the disappeared in Syria. Responsible for building and managing all technical infrastructure, web platforms, and data systems.",
-    responsibilities: [
-      "Developed and launched the organization’s official website",
-      "Designed and maintained secure databases for sensitive human rights records",
-      "Managed and optimized servers to ensure stability and data protection",
-      "Implemented advanced digital security measures to safeguard information",
-      "Collaborated with legal and research teams to provide technical solutions for data analysis and reporting",
-    ],
-    type: "part-time",
-    current: true,
-    companyUrl: "https://alwad.org", // update with real URL if available
-    highlights: [
-      "Established the organization’s complete technical infrastructure from the ground up",
-      "Introduced secure and efficient digital workflows for operations",
-    ],
-    achievements: [
-      "Built and deployed the organization’s first official website",
-      "Implemented secure systems for managing and protecting detainee data",
-    ],
-    teamSize: "Solo lead with cross-functional collaboration",
-    category: "Non-profit",
-    // icon: "/work/promise.png",
-  },
 ];
 
+/**
+ * Formats a date to a readable string format (e.g., "Jan 2023")
+ */
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -87,6 +108,9 @@ function formatDate(date: Date): string {
   });
 }
 
+/**
+ * Calculates the duration between two dates in a human-readable format
+ */
 function calculateDuration(startDate: Date, endDate?: Date): string {
   const end = endDate || new Date();
   const diffTime = Math.abs(end.getTime() - startDate.getTime());
@@ -109,7 +133,10 @@ function calculateDuration(startDate: Date, endDate?: Date): string {
   }
 }
 
-function getTypeColor(type: WorkExperienceType["type"]): string {
+/**
+ * Returns the appropriate color class for a work type badge
+ */
+function getWorkTypeColor(type: WorkType): string {
   const colors = {
     "full-time": "bg-primary text-primary-foreground",
     "part-time": "bg-secondary text-secondary-foreground",
@@ -121,216 +148,247 @@ function getTypeColor(type: WorkExperienceType["type"]): string {
   return colors[type];
 }
 
-function TimelineItem({ experience }: { experience: WorkExperienceType }) {
+function WorkExperienceCard({
+  experience,
+}: {
+  experience: WorkExperienceType;
+}) {
   return (
-    <div className="relative flex gap-6 border-b last:border-b-0">
-      <Card className="hover:bg-accent/5 transition-all duration-200 gap-4 bg-background border-0 w-full">
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              <div className="flex items-start gap-4 mb-0">
-                {experience.icon && (
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={experience.icon}
-                      alt={`${experience.company} logo`}
-                      width={100}
-                      height={100}
-                      className="size-20 bg-white p-1 object-contain rounded-2xl"
-                    />
-                  </div>
+    <Card className="hover:bg-accent/5 transition-all duration-200 bg-background border-0 w-full border-b last:border-b-0">
+      <CardHeader className="!pb-0 border-b">
+        {/* Top Row: Company Info & Badges */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
+          <div className="flex items-center gap-4 min-w-0 flex-1">
+            {experience.icon && (
+              <div className="relative">
+                <Image
+                  src={experience.icon}
+                  alt={`${experience.company} logo`}
+                  width={64}
+                  height={64}
+                  className="size-20 bg-white p-1 object-contain rounded-xl shadow-sm border border-border/50"
+                />
+                {experience.current && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background animate-pulse"></div>
                 )}
-                <div className="flex-1 min-w-0">
-                  <CardTitle className="text-xl mb-0">
-                    {experience.position}
-                  </CardTitle>
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                    {experience.companyUrl ? (
-                      <a
-                        href={experience.companyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cursor-target text-lg text-muted-foreground font-medium hover:text-primary transition-colors inline-flex items-center gap-1 px-1"
-                      >
-                        {experience.company}
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                      </a>
-                    ) : (
-                      <p className="text-lg text-muted-foreground font-medium">
-                        {experience.company}
-                      </p>
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                {experience.companyUrl ? (
+                  <a
+                    href={experience.companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl font-semibold text-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group"
+                  >
+                    {experience.company}
+                    <svg
+                      className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                ) : (
+                  <h2 className="text-xl font-semibold text-foreground">
+                    {experience.company}
+                  </h2>
+                )}
+              </div>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <MapPinIcon className="size-4" />
+                  <span>{experience.location}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <ClockIcon className="size-4" />
+                  <span>
+                    {calculateDuration(
+                      experience.startDate,
+                      experience.endDate
                     )}
-                    {experience.category && (
-                      <span className="text-sm text-muted-foreground/70 bg-muted px-2 py-1 rounded-md">
-                        {experience.category}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground flex items-center gap-2">
-                    <MapPinIcon className="size-4" />
-                    {experience.location}
-                  </p>
+                  </span>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Badges and Date */}
-            <div className="flex flex-col sm:items-end gap-2">
-              <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row lg:flex-col items-end gap-2">
+            <div className="flex gap-1 flex-wrap">
+              <Badge
+                variant="outline"
+                className={`${getWorkTypeColor(
+                  experience.type
+                )} border text-xs font-medium px-3 py-1`}
+              >
+                {experience.type.replace("-", " ")}
+              </Badge>
+              {experience.category && (
                 <Badge
-                  variant="outline"
-                  className={getTypeColor(experience.type)}
+                  variant="secondary"
+                  className="text-xs font-medium bg-green-700"
                 >
-                  {experience.type.replace("-", " ")}
+                  {experience.category}
                 </Badge>
-                {experience.current && (
-                  <Badge variant="destructive">Current</Badge>
-                )}
-              </div>
-              <div className="text-right">
-                <p className="text-sm text-muted-foreground">
-                  {formatDate(experience.startDate)} -{" "}
-                  {experience.endDate
-                    ? formatDate(experience.endDate)
-                    : "Present"}
-                </p>
-                <p className="text-xs text-foreground/50 flex items-center justify-end gap-1">
-                  <ClockIcon className="size-3" />
-                  {calculateDuration(experience.startDate, experience.endDate)}
-                </p>
-              </div>
+              )}
+              {experience.current && (
+                <Badge
+                  variant="secondary"
+                  className="text-xs font-medium px-3 py-1 bg-amber-700"
+                >
+                  Current
+                </Badge>
+              )}
+            </div>
+            <div className="text-left sm:text-right lg:text-right">
+              <p className="text-sm font-medium text-foreground">
+                {formatDate(experience.startDate)} -{" "}
+                {experience.endDate
+                  ? formatDate(experience.endDate)
+                  : "Present"}
+              </p>
             </div>
           </div>
-        </CardHeader>
+        </div>
+      </CardHeader>
 
-        <CardContent className="space-y-4">
-          <p className="text-muted-foreground leading-relaxed">
-            {experience.description}
-          </p>
+      <CardContent className="space-y-4 !pt-0">
+        <CardTitle className="text-2xl font-bold text-foreground mb-2">
+          {experience.position}
+        </CardTitle>
+        <p className="text-muted-foreground leading-relaxed">
+          {experience.description}
+        </p>
 
-          {/* Key Responsibilities */}
+        {/* Key Responsibilities */}
+        {experience?.responsibilities?.length && (
           <div>
-            <h4 className="font-semibold mb-3">Key Responsibilities</h4>
+            <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
+              Key Responsibilities
+            </h4>
             <ul className="space-y-2">
               {experience.responsibilities.map((responsibility, index) => (
                 <li
                   key={index}
                   className="text-sm text-muted-foreground flex items-start gap-3"
                 >
-                  <span className="text-primary mt-0 flex-shrink-0">•</span>
+                  <span className="text-muted-foreground/60 mt-1 flex-shrink-0 text-xs">
+                    •
+                  </span>
                   <span>{responsibility}</span>
                 </li>
               ))}
             </ul>
           </div>
+        )}
 
-          {/* Highlights */}
-          {experience.highlights && experience.highlights.length > 0 && (
-            <div>
-              <h4 className="font-semibold mb-3">Key Highlights</h4>
-              <ul className="space-y-2">
-                {experience.highlights.map((highlight, index) => (
-                  <li
-                    key={index}
-                    className="text-sm text-muted-foreground flex items-start gap-3"
-                  >
-                    <span className="text-secondary-foregroundmt-0 flex-shrink-0">
-                      ★
-                    </span>
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+        {/* Highlights */}
+        {experience.highlights && experience.highlights.length > 0 && (
+          <div>
+            <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
+              Key Highlights
+            </h4>
+            <ul className="space-y-2">
+              {experience.highlights.map((highlight, index) => (
+                <li
+                  key={index}
+                  className="text-sm text-muted-foreground flex items-start gap-3"
+                >
+                  <span className="text-muted-foreground/60 mt-1 flex-shrink-0 text-xs">
+                    •
+                  </span>
+                  <span>{highlight}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-          {/* Achievements */}
-          {experience.achievements && experience.achievements.length > 0 && (
-            <div>
-              <h4 className="font-semibold mb-3">Achievements</h4>
-              <ul className="space-y-2">
-                {experience.achievements.map((achievement, index) => (
-                  <li
-                    key={index}
-                    className="text-sm text-muted-foreground flex items-start gap-3"
-                  >
-                    <span className="text-accent mt-0 flex-shrink-0">🏆</span>
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+        {/* Achievements */}
+        {experience.achievements && experience.achievements.length > 0 && (
+          <div>
+            <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
+              Achievements
+            </h4>
+            <ul className="space-y-2">
+              {experience.achievements.map((achievement, index) => (
+                <li
+                  key={index}
+                  className="text-sm text-muted-foreground flex items-start gap-3"
+                >
+                  <span className="text-muted-foreground/60 mt-1 flex-shrink-0 text-xs">
+                    •
+                  </span>
+                  <span>{achievement}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
-// Work Statistics
-const workStats = {
-  totalExperience: "2+ years",
-  organizations: 3,
-  currentRoles: 2,
-  totalProjects: 15,
-  teamMembersLed: 25,
-  technologiesUsed: 12,
-};
+/**
+ * Automatically calculates work statistics from experience data
+ * - Total experience in years/months
+ * - Number of unique organizations
+ * - Number of current roles
+ */
+function calculateWorkStatistics(
+  experiences: WorkExperienceType[]
+): WorkStatistics {
+  const currentDate = new Date();
+  const currentRoles = experiences.filter((exp) => exp.current).length;
+  const organizations = new Set(experiences.map((exp) => exp.company)).size;
 
-// Skills developed through work
-// const workSkills = [
-//   {
-//     category: "Leadership",
-//     skills: [
-//       "Team Management",
-//       "Strategic Planning",
-//       "Cross-functional Collaboration",
-//     ],
-//   },
-//   {
-//     category: "Technology",
-//     skills: [
-//       "Full-stack Development",
-//       "Database Design",
-//       "System Architecture",
-//       "Security Implementation",
-//     ],
-//   },
-//   {
-//     category: "Humanitarian",
-//     skills: [
-//       "Crisis Response",
-//       "Community Support",
-//       "Resource Management",
-//       "Stakeholder Communication",
-//     ],
-//   },
-//   {
-//     category: "Project Management",
-//     skills: [
-//       "Agile Methodologies",
-//       "Timeline Management",
-//       "Risk Assessment",
-//       "Quality Assurance",
-//     ],
-//   },
-// ];
+  // Calculate total career span from earliest start date to present
+  const earliestStartDate = new Date(
+    Math.min(...experiences.map((exp) => exp.startDate.getTime()))
+  );
+  const latestEndDate = new Date(
+    Math.max(
+      ...experiences.map((exp) => (exp.endDate || currentDate).getTime())
+    )
+  );
+
+  const diffTime = latestEndDate.getTime() - earliestStartDate.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.44)); // More accurate month calculation
+  const diffYears = Math.floor(diffDays / 365.25); // Account for leap years
+
+  let totalExperience: string;
+  if (diffYears >= 2) {
+    totalExperience = `${diffYears}+ years`;
+  } else if (diffYears === 1) {
+    const remainingMonths = Math.floor((diffDays % 365.25) / 30.44);
+    totalExperience = remainingMonths > 0 ? `1+ years` : `1 year`;
+  } else {
+    totalExperience = `${diffMonths} months`;
+  }
+
+  return {
+    totalExperience,
+    organizations,
+    currentRoles,
+    totalProjects: 15, // This could be calculated from a projects array if available
+    teamMembersLed: 25, // This could be calculated from teamSize data if available
+    technologiesUsed: 12, // This could be calculated from tech stacks if available
+  };
+}
 
 export default function WorkPage() {
   // Sort work experiences by start date (latest first)
-  const sortedWorkExperiences = [...workExperiences].sort((a, b) => {
+  const sortedExperiences = [...WORK_EXPERIENCES].sort((a, b) => {
     // If one is current and the other isn't, current comes first
     if (a.current && !b.current) return -1;
     if (!a.current && b.current) return 1;
@@ -339,15 +397,18 @@ export default function WorkPage() {
     return b.startDate.getTime() - a.startDate.getTime();
   });
 
+  // Calculate statistics automatically
+  const statistics = calculateWorkStatistics(WORK_EXPERIENCES);
+
   return (
     <div className="min-h-screen bg-background pt-10">
       {/* Header Section */}
       <div className="max-w-5xl mx-auto border-x border-t">
-        <div className="p-6 border-b">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
+        <div className="p-8 border-b">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Work Experience
           </h1>
-          <p className="text-lg text-foreground/70 max-w-2xl leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
             A journey through my professional experience, from humanitarian work
             during crisis response to building platforms for justice and
             education. Each role has shaped my commitment to using technology
@@ -356,105 +417,33 @@ export default function WorkPage() {
         </div>
 
         {/* Statistics Section */}
-        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-0 border-b">
-          <div className="border-r p-4 text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-0 border-b">
+          <div className="border-r p-6 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.totalExperience}
+              {statistics.totalExperience}
             </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Experience
-            </div>
+            <div className="text-sm text-muted-foreground">Experience</div>
           </div>
-          <div className="border-r p-4 text-center">
+          <div className="border-r p-6 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.organizations}
+              {statistics.organizations}
             </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Organizations
-            </div>
+            <div className="text-sm text-muted-foreground">Organizations</div>
           </div>
-          <div className="border-r p-4 text-center">
+          <div className="p-6 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.currentRoles}
+              {statistics.currentRoles}
             </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Current Roles
-            </div>
+            <div className="text-sm text-muted-foreground">Current Roles</div>
           </div>
-          {/* <div className="border-r p-4 text-center">
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.totalProjects}
-            </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Projects
-            </div>
-          </div> */}
-          {/* <div className="border-r p-4 text-center">
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.teamMembersLed}
-            </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Team Members
-            </div>
-          </div>
-          <div className="p-4 text-center">
-            <div className="text-2xl font-bold text-foreground mb-1">
-              {workStats.technologiesUsed}
-            </div>
-            <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Technologies
-            </div>
-          </div> */}
         </div>
-
-        {/* Skills Developed Section */}
-        {/* <div className="border-b">
-          <div className="p-6">
-            <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-6">
-              Skills Developed
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {workSkills.map((skillGroup, index) => (
-                <div key={index} className="border bg-card p-4">
-                  <h3 className="font-semibold text-foreground mb-3 uppercase tracking-wide text-sm">
-                    {skillGroup.category}
-                  </h3>
-                  <ul className="space-y-2">
-                    {skillGroup.skills.map((skill, skillIndex) => (
-                      <li
-                        key={skillIndex}
-                        className="text-sm text-foreground/70 flex items-center gap-2"
-                      >
-                        <span className="text-primary">•</span>
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
       </div>
 
-      {/* Timeline */}
-      <div className="max-w-5xl mx-auto border-x">
-        {sortedWorkExperiences.map((experience) => (
-          <TimelineItem key={experience.id} experience={experience} />
+      {/* Work Experiences */}
+      <div className="max-w-5xl mx-auto border-x border-b mb-1">
+        {sortedExperiences.map((experience) => (
+          <WorkExperienceCard key={experience.id} experience={experience} />
         ))}
-      </div>
-
-      {/* Footer Note */}
-      <div className="max-w-5xl mx-auto border">
-        <div className="p-4 text-center">
-          <p className="text-sm text-foreground/50">
-            This timeline represents my journey in using technology for social
-            impact.
-            <br />
-            Each experience has contributed to my growth as both a developer and
-            a humanitarian.
-          </p>
-        </div>
       </div>
     </div>
   );

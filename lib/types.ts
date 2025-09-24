@@ -27,29 +27,42 @@ export type WorkExperienceType = {
   startDate: Date;
   endDate?: Date;
   description: string;
-  responsibilities: string[];
-  type:
-    | "full-time"
-    | "part-time"
-    | "internship"
-    | "freelance"
-    | "contract"
-    | "volunteer";
+  responsibilities?: string[];
+  type: WorkType;
   current?: boolean;
   companyUrl?: string;
   highlights?: string[];
   achievements?: string[];
   teamSize?: string;
-  category?:
-    | "Open Source"
-    | "Volunteer"
-    | "Education"
-    | "Startup"
-    | "Enterprise"
-    | "Non-profit"
-    | "Government"
-    | "Consulting"
-    | "Research"
-    | "Other";
+  category?: WorkCategory;
   icon?: string;
+};
+
+export type WorkType =
+  | "full-time"
+  | "part-time"
+  | "internship"
+  | "freelance"
+  | "contract"
+  | "volunteer";
+
+export type WorkCategory =
+  | "Open Source"
+  | "Volunteer"
+  | "Education"
+  | "Startup"
+  | "Enterprise"
+  | "Non-profit"
+  | "Government"
+  | "Consulting"
+  | "Research"
+  | "Other";
+
+export type WorkStatistics = {
+  totalExperience: string;
+  organizations: number;
+  currentRoles: number;
+  totalProjects: number;
+  teamMembersLed: number;
+  technologiesUsed: number;
 };

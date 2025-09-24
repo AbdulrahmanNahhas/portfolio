@@ -4,11 +4,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import { navigationItems, getActiveHref } from "@/lib/navigation";
-import { LogoDropdown } from "./header/LogoDropdown";
-import { DesktopNavigation } from "./header/DesktopNavigation";
-import { MobileHamburger } from "./header/MobileHamburger";
-import { MobileBackdrop } from "./header/MobileBackdrop";
-import { MobileMenu } from "./header/MobileMenu";
+import { LogoDropdown } from "./LogoDropdown";
+import { DesktopNavigation } from "./DesktopNavigation";
+import { MobileHamburger } from "./MobileHamburger";
+import { MobileBackdrop } from "./MobileBackdrop";
+import { MobileMenu } from "./MobileMenu";
 
 export default function Header() {
   const pathname = usePathname();
@@ -117,7 +117,7 @@ export default function Header() {
 
       {/* Main Navigation */}
       <motion.div
-        className="fixed top-0 z-[1002] left-1/2 -translate-x-1/2 w-full max-w-5xl p-0 border bg-background/80 backdrop-blur-xl"
+        className="fixed top-0 z-[1002] left-1/2 -translate-x-1/2 w-full max-w-5xl p-0 border bg-background"
         initial={{ y: 0, opacity: 1 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0 }}

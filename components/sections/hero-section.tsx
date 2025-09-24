@@ -38,7 +38,7 @@ const HeroSection = () => {
                 target="_blank"
                 href={siteConfig.social.gitlab}
                 aria-label="GitLab"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   role="img"
@@ -54,7 +54,7 @@ const HeroSection = () => {
                 target="_blank"
                 href={siteConfig.social.twitter}
                 aria-label="Twitter"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ const HeroSection = () => {
                 target="_blank"
                 href={siteConfig.social.email}
                 aria-label="Email"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-300 ease-in-out border border-white/20 p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

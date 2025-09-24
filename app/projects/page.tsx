@@ -64,7 +64,7 @@ export default async function ProjectsPage() {
 
         {/* Project Statistics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0 border-b">
-          <div className="border-r p-4 text-center border-b lg:border-b-0">
+          <div className="border-r p-4 text-center hover:bg-accent/50  border-b lg:border-b-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.totalProjects}
             </div>
@@ -72,7 +72,7 @@ export default async function ProjectsPage() {
               Total Projects
             </div>
           </div>
-          <div className="border-r p-4 text-center border-b lg:border-b-0">
+          <div className="border-r p-4 text-center hover:bg-accent/50 border-b lg:border-b-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.completedProjects}
             </div>
@@ -80,7 +80,7 @@ export default async function ProjectsPage() {
               Completed
             </div>
           </div>
-          <div className="border-r p-4 text-center border-b lg:border-b-0">
+          <div className="border-r p-4 text-center hover:bg-accent/50 border-b lg:border-b-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.activeProjects}
             </div>
@@ -88,7 +88,7 @@ export default async function ProjectsPage() {
               Active
             </div>
           </div>
-          <div className="border-r p-4 text-center border-b md:border-b-0">
+          <div className="border-r p-4 text-center hover:bg-accent/50 border-b md:border-b-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.featuredProjects}
             </div>
@@ -96,7 +96,7 @@ export default async function ProjectsPage() {
               Featured
             </div>
           </div>
-          <div className="p-4 text-center border-r lg:border-r-0">
+          <div className="p-4 text-center border-r hover:bg-accent/50 lg:border-r-0">
             <div className="text-2xl font-bold text-foreground mb-1">
               {stats.uniqueTech}
             </div>

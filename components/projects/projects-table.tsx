@@ -214,7 +214,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             const isThirdInRow = index % 3 === 2;
 
             let borderClasses =
-              "cursor-target group p-3.5 rounded-none bg-background hover:bg-accent/50 transition-all duration-200 hover:shadow-sm relative";
+              "cursor-target group p-3.5 rounded-none bg-background hover:bg-accent/50 transition-all duration-0 hover:shadow-sm relative";
 
             // Apply borders based on screen size
             if (isLastRow) {
@@ -298,7 +298,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}
-              className="cursor-target group block p-4 border-b last:border-b-0 hover:bg-accent/30 transition-colors duration-200"
+              className=" hover:bg-accent/50 cursor-target group block p-4 border-b last:border-b-0 transition-colors duration-0"
             >
               <div className="flex items-start gap-4">
                 {project.icon ? (
