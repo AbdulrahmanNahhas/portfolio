@@ -1,74 +1,68 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import {
+  Nextjs,
+  ReactIcon,
+  NodeJS,
+  Git,
+  Supabase,
+  PostgreSQL,
+  GitLab,
+  RaspberryPI,
+  C,
+} from "../icons";
+import { ESPIDF } from "../icons/ESPIDF";
+import Link from "next/link";
+
+import {
+  Marquee,
+  MarqueeContent,
+  MarqueeFade,
+  MarqueeItem,
+} from "@/components/ui/kibo-ui/marquee";
 
 const technologies = [
-  "astro",
-  "vue",
-  "react",
-  "typeScript",
-  "tailwindcss",
-  "next",
-  "nodejs",
-  "HTML5",
-  "CSS3",
-  "javaScript",
-  "git",
-  "supabase",
-  "mysql",
-  "bash",
+  { name: "React", component: ReactIcon },
+  { name: "Next.js", component: Nextjs },
+  { name: "Git", component: Git },
+  { name: "Gitlab", component: GitLab },
+  { name: "C++", component: C },
+  { name: "ESP-IDF", component: ESPIDF },
+  { name: "RaspberryPI", component: RaspberryPI },
+  { name: "Node.js", component: NodeJS },
+  { name: "PostgreSQL", component: PostgreSQL },
+  { name: "Supabase", component: Supabase },
 ];
 
 const TechnologiesSection = () => {
   return (
-    <div className="relative overflow-x-hidden py-4">
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[var(--background)] to-transparent z-20 active:rounded-[50px]" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[var(--background)] to-transparent z-20" />
-
-      <div className="flex animate-scroll hover:animate-paused gap-12 md:gap-16 w-max">
+    <Marquee className="flex size-full items-center justify-center bg-background">
+      <MarqueeFade side="left" />
+      <MarqueeFade side="right" />
+      <MarqueeContent>
         {[...technologies, ...technologies, ...technologies].map(
-          (tech, index) => (
-            <div
-              key={`${tech}-${index}`}
-              className="flex items-center gap-2 group transition-all duration-300"
-            >
-              <Image
-                src={`/svg/${tech}.svg`}
-                alt={tech}
-                className="h-7 w-auto object-contain transition-transform group-hover:scale-110 opacity-60"
-                width={30}
-                height={30}
-                loading="lazy"
-              />
-              <span className="text-lg font-medium text-[var(--white-icon)]">
-                {tech.charAt(0).toUpperCase() + tech.slice(1)}
-              </span>
-            </div>
-          )
+          (tech, index) => {
+            const IconComponent = tech.component;
+            return (
+              <MarqueeItem key={`${tech.name}-${index}`}>
+                <Link
+                  href={`https://duckduckgo.com/?q=${tech.name}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 group transition-all duration-0 hover:bg-accent/50 border-x py-4 px-6"
+                >
+                  <IconComponent className="h-7 w-7 transition-transform group-hover:scale-110 opacity-60" />
+                  <span className="text-lg font-medium text-[var(--white-icon)]">
+                    {tech.name.charAt(0).toUpperCase() + tech.name.slice(1)}
+                  </span>
+                </Link>
+              </MarqueeItem>
+            );
+          }
         )}
-      </div>
-
-      <style jsx global>{`
-        @keyframes scroll {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-        .animate-scroll {
-          animation: scroll 50s linear infinite;
-        }
-
-        @media (min-width: 768px) {
-          .animate-scroll {
-            animation-duration: 50s;
-          }
-        }
-      `}</style>
-    </div>
+      </MarqueeContent>
+    </Marquee>
   );
 };
 

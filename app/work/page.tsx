@@ -18,7 +18,7 @@ const WORK_EXPERIENCES: WorkExperienceType[] = [
       "Led the technical side of the company, including websites, platforms, and infrastructure",
       "Worked with founders to align technical solutions with business goals",
     ],
-    type: "full-time",
+    type: "part-time",
     current: true,
     // companyUrl: "https://navigate-tech.com",
     category: "Startup",
@@ -80,13 +80,13 @@ const WORK_EXPERIENCES: WorkExperienceType[] = [
   },
   {
     id: "5",
-    company: "Insan for Psychosocial Support",
+    company: "Joud Volunteers Team",
     position: "Volunteer",
-    location: "Fatih, Istanbul",
+    location: "Remote",
     startDate: new Date("2023-02-01"),
-    endDate: new Date("2023-02-28"),
+    endDate: new Date("2023-03-14"),
     description:
-      "Volunteered with Insan for Psychosocial Support during the Turkey-Syria earthquake response in February 2023.",
+      "Volunteered with Joud Volunteers Team during the Turkey-Syria earthquake response in February 2023.",
     responsibilities: [
       "Assisted in distributing relief supplies and supporting affected families",
     ],
@@ -94,8 +94,26 @@ const WORK_EXPERIENCES: WorkExperienceType[] = [
     current: false,
     companyUrl: "https://insanps.org",
     category: "Non-profit",
-    icon: "/work/insanps.png",
+    icon: "/work/joud.png",
   },
+  // {
+  //   id: "5",
+  //   company: "INSAN for Psychosocial Support",
+  //   position: "Volunteer",
+  //   location: "Istanbul, Turkey",
+  //   startDate: new Date("2023-02-01"),
+  //   endDate: new Date("2023-02-28"),
+  //   description:
+  //     "Volunteered with Insan for Psychosocial Support during the Turkey-Syria earthquake response in February 2023.",
+  //   responsibilities: [
+  //     "Assisted in distributing relief supplies and supporting affected families",
+  //   ],
+  //   type: "volunteer",
+  //   current: false,
+  //   companyUrl: "https://insanps.org",
+  //   category: "Non-profit",
+  //   icon: "/work/insanps.png",
+  // },
 ];
 
 /**
@@ -418,19 +436,19 @@ export default function WorkPage() {
 
         {/* Statistics Section */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-0 border-b">
-          <div className="border-r p-6 text-center hover:bg-accent/50">
+          <div className="border-r p-4 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.totalExperience}
             </div>
             <div className="text-sm text-muted-foreground">Experience</div>
           </div>
-          <div className="border-r p-6 text-center hover:bg-accent/50">
+          <div className="border-r p-4 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.organizations}
             </div>
             <div className="text-sm text-muted-foreground">Organizations</div>
           </div>
-          <div className="p-6 text-center hover:bg-accent/50">
+          <div className="p-4 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.currentRoles}
             </div>

@@ -192,7 +192,7 @@ export default function ToolsPage() {
               href={tool.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block border bg-card hover:bg-accent/50 transition-all duration-200 active:scale-[0.98]"
+              className="group block border bg-card hover:bg-accent/50 transition-all duration-0 active:scale-[0.98]"
             >
               <div className="p-4">
                 <div className="flex items-start justify-between mb-3">
