@@ -45,12 +45,15 @@ const TechnologiesSection = () => {
           (tech, index) => {
             const IconComponent = tech.component;
             return (
-              <MarqueeItem key={`${tech.name}-${index}`}>
+              <MarqueeItem
+                key={`${tech.name}-${index}`}
+                className="-mx-0 border-x"
+              >
                 <Link
                   href={`https://duckduckgo.com/?q=${tech.name}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 group transition-all duration-0 hover:bg-accent/50 border-x py-4 px-6"
+                  className="flex items-center gap-2 group transition-all duration-0 hover:bg-accent/50 py-4 px-6"
                 >
                   <IconComponent className="h-7 w-7 transition-transform group-hover:scale-110 opacity-60" />
                   <span className="text-lg font-medium text-[var(--white-icon)]">

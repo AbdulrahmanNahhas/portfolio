@@ -36,16 +36,8 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
     >
       <AnimatePresence mode="wait">
         {!isOpen ? (
-          <span
-            className="pl-3 text-xl font-bold tracking-wider text-white select-none"
-            style={{
-              fontFamily:
-                "'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-            }}
-          >
-            NAHHAS
+          <span className="pl-3 text-xl font-bold tracking-wider text-foreground select-none font-gulax">
+            Nahhas
           </span>
         ) : (
           <motion.div
