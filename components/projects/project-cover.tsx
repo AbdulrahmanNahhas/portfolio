@@ -60,6 +60,7 @@ const ProjectCover = ({ src, alt }: ProjectCoverProps) => {
             stopOnLastSnap: false,
           }),
         ]}
+        dir="ltr"
         setApi={setApi}
         className="w-fit select-none"
         opts={{

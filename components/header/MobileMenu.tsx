@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NavItem } from "@/lib/navigation";
+import { MobileLanguageToggle } from "./MobileLanguageToggle";
+import { useTranslations } from "next-intl";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -24,6 +26,7 @@ export function MobileMenu({
   isMoreDropdownOpen,
   onToggleMoreDropdown,
 }: MobileMenuProps) {
+  const t = useTranslations("Navigation");
   return (
     <AnimatePresence>
       {isOpen && (
@@ -47,7 +50,7 @@ export function MobileMenu({
             <ul className="space-y-1">
               {items.map((item, index) => {
                 const isActive = activeHref === item.href;
-                const isMoreItem = item.label === "More";
+                const isMoreItem = item.label === t("more");
 
                 // More dropdown in mobile
                 if (isMoreItem && item.subItems) {
@@ -173,6 +176,8 @@ export function MobileMenu({
                   </motion.li>
                 );
               })}
+              {/* Language Toggle for Mobile */}
+              <MobileLanguageToggle onClose={onClose} />
             </ul>
           </div>
         </motion.div>

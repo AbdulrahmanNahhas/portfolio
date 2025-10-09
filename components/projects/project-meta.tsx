@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Code, Globe, PlayCircle } from "lucide-react";
@@ -5,6 +7,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 type ProjectMetaProps = {
   tech: string[];
@@ -27,19 +30,20 @@ const ProjectMeta = ({
   endDate,
   links,
 }: ProjectMetaProps) => {
+  const t = useTranslations("ProjectsPage");
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
       <div className="space-y-5">
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
-            ROLE
+            {t("projectMeta.role")}
           </h3>
           <p className="text-base font-medium">{role}</p>
         </div>
 
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
-            STATUS
+            {t("projectMeta.status")}
           </h3>
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
             {status}
@@ -48,13 +52,15 @@ const ProjectMeta = ({
 
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
-            TIMELINE
+            {t("projectMeta.timeline")}
           </h3>
           <div className="flex items-center space-x-2 text-sm">
             <Calendar className="h-4 w-4" />
             {format(startDate, "dd MMMM, yyyy")}
             <span className="px-2">—</span>
-            {endDate ? format(endDate, "dd MMMM, yyyy") : "Present"}
+            {endDate
+              ? format(endDate, "dd MMMM, yyyy")
+              : t("projectMeta.present")}
           </div>
         </div>
       </div>
@@ -62,7 +68,7 @@ const ProjectMeta = ({
       <div className="space-y-5">
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
-            TECHNOLOGIES
+            {t("projectMeta.technologies")}
           </h3>
           <div className="flex flex-wrap gap-1.5">
             {tech.map((item) => (
@@ -79,7 +85,7 @@ const ProjectMeta = ({
 
         <div>
           <h3 className="text-sm font-medium text-muted-foreground mb-2">
-            LINKS
+            {t("projectMeta.links")}
           </h3>
           <div className="flex flex-col space-y-1.5">
             {links.website && (
@@ -93,7 +99,7 @@ const ProjectMeta = ({
                 )}
               >
                 <Globe className="h-4 w-4" />
-                Website
+                {t("projectMeta.website")}
               </Link>
             )}
             {links.repository && (
@@ -107,7 +113,7 @@ const ProjectMeta = ({
                 )}
               >
                 <Code className="h-4 w-4" />
-                Repository
+                {t("projectMeta.repository")}
               </Link>
             )}
             {links.demo && (
@@ -121,7 +127,7 @@ const ProjectMeta = ({
                 )}
               >
                 <PlayCircle className="h-4 w-4" />
-                Demo
+                {t("projectMeta.demo")}
               </Link>
             )}
           </div>

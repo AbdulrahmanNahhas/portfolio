@@ -47,16 +47,13 @@ export type WorkType =
   | "volunteer";
 
 export type WorkCategory =
-  | "Open Source"
-  | "Volunteer"
-  | "Education"
   | "Startup"
-  | "Enterprise"
-  | "Non-profit"
+  | "Political Party"
+  | "Non-profit Organization"
+  | "Non-profit Association"
   | "Government"
-  | "Consulting"
-  | "Research"
-  | "Other";
+  | "Other"
+  | "Freelance";
 
 export type WorkStatistics = {
   totalExperience: string;

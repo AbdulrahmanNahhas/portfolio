@@ -1,7 +1,7 @@
 export const siteConfig = {
   // Contact Information
   contact: {
-    email: "abdulrahman.nahhas@example.com", // Update with your actual email
+    email: "nahhas909@proton.com",
     phone: "+963 XXX XXX XXX", // Update with your actual phone
     location: "Hims, Syria",
   },
@@ -10,7 +10,7 @@ export const siteConfig = {
   social: {
     gitlab: "https://gitlab.com/AbdulrahmanNahhas",
     twitter: "https://x.com/nahhas_tech",
-    email: "mailto:nahhas909@protonmail.com", // Will be generated from contact.email
+    email: "mailto:nahhas909@proton.com", // Will be generated from contact.email
   },
 
   // Website Configuration

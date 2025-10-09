@@ -72,7 +72,7 @@ const ProjectCard = ({
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2 mb-2">
             <h3 className="font-medium text-base leading-tight">{title}</h3>
-            <ArrowRight className="size-4 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0 mt-0.5" />
+            <ArrowRight className="size-4 text-muted-foreground group-hover:text-foreground transition-colors flex-shrink-0 mt-0.5 rtl:rotate-180" />
           </div>
 
           <p className="text-sm text-muted-foreground line-clamp-3 mb-3">
@@ -88,7 +88,7 @@ const ProjectCard = ({
             {tech && tech.length > 0 && (
               <>
                 {category && <span>•</span>}
-                <span>{tech.slice(0, 2).join(", ")}</span>
+                <span dir="ltr">{tech.slice(0, 2).join(", ")}</span>
               </>
             )}
           </div>

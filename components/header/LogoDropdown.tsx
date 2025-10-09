@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { socialLinks } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 
 interface LogoDropdownProps {
   isOpen: boolean;
@@ -12,19 +13,20 @@ interface LogoDropdownProps {
 
 export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
   const logoRef = useRef<HTMLButtonElement | null>(null);
+  const t = useTranslations("Header");
 
   return (
     <motion.button
       ref={logoRef}
       aria-label="Social Media Menu"
       onClick={onToggle}
-      className="p-0 inline-flex items-center justify-center absolute top-0 left-0 cursor-pointer"
+      className="p-0 inline-flex items-center justify-start cursor-pointer rtl:border-l ltr:border-r"
       initial={{
         width: "auto",
         height: "40px",
       }}
       animate={{
-        width: isOpen ? "130px" : "auto",
+        width: isOpen ? "140px" : "161px",
         height: isOpen ? "115px" : "40px",
       }}
       transition={{
@@ -36,8 +38,8 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
     >
       <AnimatePresence mode="wait">
         {!isOpen ? (
-          <span className="pl-3 text-xl font-bold tracking-wider text-foreground select-none font-gulax">
-            Nahhas
+          <span className="text-xl font-bold tracking-wider text-foreground select-none font-header px-3 line-clamp-1 text-start ">
+            {t("logo")}
           </span>
         ) : (
           <motion.div
@@ -46,11 +48,11 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{
-              duration: 0.1,
+              duration: 0.2,
               ease: [0.4, 0, 0.2, 1],
               delay: 0.1,
             }}
-            className="flex flex-col items-start justify-start gap-0 w-full h-full p-0 border-b border-r bg-background"
+            className="flex flex-col items-start justify-start gap-0 w-full h-full p-0 border-b bg-background"
           >
             {socialLinks.map((social, index) => (
               <motion.div

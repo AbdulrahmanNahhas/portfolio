@@ -1,0 +1,312 @@
+{
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "Language": {
+    "selector": "Language Selector",
+    "english": "English",
+    "arabic": "Arabic"
+  },
+  "Header": {
+    "logo": "Mr. Nahhas"
+  },
+  "Navigation": {
+    "home": "Home",
+    "work": "Work",
+    "projects": "Projects",
+    "more": "More",
+    "learningSkills": "Learning & Skills",
+    "toolsIUse": "Tools I Use",
+    "cvResume": "CV / Resume",
+    "contactMe": "Contact Me"
+  },
+  "HeroSection": {
+    "greeting": "Hi, I'm Abdulrahman Nahhas",
+    "title": "Student & Developer",
+    "introLine1": "I'm",
+    "name": "Abdulrahman Nahhas",
+    "ageAndLocation": "an 18-year-old from Syria.",
+    "bioLine1": "a student and developer",
+    "passionateAbout": "passionate about building",
+    "webApps": "web applications",
+    "and": "and",
+    "embeddedSystems": "embedded systems",
+    "bioLine2": ". I balance my academic studies with hands-on projects that challenge me to grow as a programmer and systems engineer dedicated to meaningful solutions.",
+    "enjoyLine": "I enjoy working with",
+    "modernTech": "modern technologies",
+    "from": "— from",
+    "nextjs": "Next.js",
+    "to": "to",
+    "esp32Iot": "ESP32 & IoT",
+    "andBuilding": "— and creating",
+    "interactiveSolutions": "interactive solutions",
+    "finalLine": "that make a real impact. Beyond coding, I explore new frameworks, contribute to open-source projects, and stay tuned to emerging tech trends.",
+    "born": "Born: April 17, 2007",
+    "location": "Homs, Syria",
+    "status": "University Student",
+    "ariaLabels": {
+      "gitlab": "My GitLab Profile",
+      "twitter": "My Twitter",
+      "email": "Email Me"
+    }
+  },
+  "SkillsSection": {
+    "title": "What I do?",
+    "categories": {
+      "webDevelopment": "Web Development",
+      "embeddedSystems": "Embedded Systems",
+      "otherSkills": "Other Skills"
+    },
+    "webDevelopment": [
+      "Building full-stack applications with Next.js & React",
+      "Designing and integrating scalable APIs & databases",
+      "Developing secure, high-performance web platforms",
+      "Creating modern, responsive, and user-friendly designs"
+    ],
+    "embeddedSystems": [
+      "C/C++ programming for microcontrollers",
+      "Arduino & ESP32 (ESP-IDF) development",
+      "IoT systems, sensors, and real-time integration"
+    ],
+    "otherSkills": [
+      "UI/UX design with Figma and Photoshop",
+      "Database design and local DB implementation",
+      "Mobile development with Expo.js (React Native)"
+    ]
+  },
+  "WorkPage": {
+    "title": "Work Experience",
+    "description": "A journey through my professional experience — from humanitarian work during crisis response to building digital platforms for justice and education. Each role has strengthened my commitment to using technology as a tool for positive and lasting impact.",
+    "statistics": {
+      "experience": "Experience",
+      "organizations": "Organizations",
+      "currentRoles": "Current Roles"
+    },
+    "workTypes": {
+      "full-time": "Full Time",
+      "part-time": "Part Time",
+      "internship": "Internship",
+      "freelance": "Freelance",
+      "contract": "Contract",
+      "volunteer": "Volunteer"
+    },
+    "workCategories": {
+      "startup": "Startup",
+      "politicalParty": "Political Party",
+      "nonProfitOrganization": "Non-profit Organization",
+      "nonProfitAssociation": "Non-profit Association",
+      "government": "Government",
+      "other": "Other",
+      "freelance": "Freelance"
+    },
+    "sections": {
+      "keyResponsibilities": "Key Responsibilities",
+      "keyHighlights": "Key Highlights",
+      "achievements": "Achievements"
+    },
+    "badges": {
+      "current": "Current"
+    },
+    "dateFormat": {
+      "present": "Present"
+    },
+    "experiences": {
+      "navigate": {
+        "company": "NAVIGATE",
+        "position": "Co-Founder & Chief Technology Officer (CTO)",
+        "location": "Remote",
+        "description": "Co-founded NAVIGATE, a Syrian consulting company that empowers startups through business strategy, digital tools, and technical development.",
+        "responsibilities": [
+          "Led the company's technical strategy, including web platforms, infrastructure, and internal systems",
+          "Collaborated with founders to ensure that technical solutions aligned with long-term business goals and product vision"
+        ],
+        "highlights": [
+          "Built scalable digital foundations for multiple client startups",
+          "Developed internal frameworks for efficient project delivery"
+        ]
+      },
+      "newSyriaMovement": {
+        "company": "New Syria Movement",
+        "position": "Member",
+        "location": "Syria",
+        "description": "Joined the New Syria Movement, a Syrian political party focused on social and political reform, contributing to initiatives that support a vision for justice and reconstruction.",
+        "responsibilities": [
+          "Participated in discussions, local meetings, and awareness activities as an active member"
+        ]
+      },
+      "promiseForJustice": {
+        "company": "Promise for Justice & Truth",
+        "position": "Chief Technology Officer (CTO)",
+        "location": "Homs, Syria",
+        "description": "Served as CTO at Promise for Justice & Truth, a human rights organization dedicated to documenting and addressing cases of detainees and the disappeared in Syria.",
+        "responsibilities": [
+          "Designed and implemented secure databases and digital infrastructure for sensitive data",
+          "Provided ongoing technical support for research and legal documentation teams",
+          "Developed and programmed the organization's website with advanced features, including forms for families of detainees, surveys, databases, and a comprehensive dashboard"
+        ],
+        "highlights": [
+          "Enhanced operational efficiency through tailored data management tools",
+          "Built an integrated platform for managing surveys, records, and reports"
+        ]
+      },
+      "thabat": {
+        "company": "Thabat Association",
+        "position": "Technical & Media Lead (Volunteer)",
+        "location": "Homs, Syria",
+        "description": "Thabat – The Islamic Association for Da'wah, Education, and Culture – is a non-profit organization dedicated to Islamic education, cultural development, and da'wah activities.",
+        "responsibilities": [
+          "Managed and maintained technical systems and digital platforms for the association",
+          "Led media production and online presence to support community engagement",
+          "Designed and developed the organization's website with a contemporary, clean, and simple design"
+        ],
+        "highlights": [
+          "Revamped the digital identity of the organization through improved media strategy and platform design"
+        ]
+      },
+      "joudVolunteers": {
+        "company": "Joud Volunteers Team",
+        "position": "Volunteer",
+        "location": "Remote",
+        "description": "Volunteered with Joud Volunteers Team during the humanitarian response to the Turkey–Syria earthquake in February 2023.",
+        "responsibilities": [
+          "Supported logistics and coordination of relief operations for earthquake-affected families"
+        ],
+        "highlights": [
+          "Contributed to community relief initiatives during one of the region’s most critical crises"
+        ]
+      }
+    }
+  },
+  "ProjectsPage": {
+    "title": "Projects",
+    "description": "A collection of projects I've built — each one reflecting creativity, problem-solving, and growth through code and design.",
+    "statistics": {
+      "totalProjects": "Total Projects",
+      "completedProjects": "Completed",
+      "technologies": "Technologies",
+      "categories": "Categories",
+      "activeProjects": "Active Projects"
+    },
+    "sections": {
+      "featuredProjects": "Featured Projects",
+      "allProjects": "All Projects"
+    },
+    "filters": {
+      "searchPlaceholder": "Search projects...",
+      "filterAll": "All",
+      "filterActive": "Active",
+      "filterCompleted": "Completed",
+      "sortNewest": "Newest",
+      "sortOldest": "Oldest",
+      "sortName": "Name"
+    },
+    "projectStatus": {
+      "planning": "Planning",
+      "inDevelopment": "In Development",
+      "inProduction": "In Production",
+      "completed": "Completed",
+      "archived": "Archived"
+    },
+    "projectMeta": {
+      "role": "ROLE",
+      "status": "STATUS",
+      "timeline": "TIMELINE",
+      "technologies": "TECHNOLOGIES",
+      "links": "LINKS",
+      "website": "Website",
+      "repository": "Repository",
+      "demo": "Demo",
+      "present": "Present"
+    }
+  },
+  "ToolsPage": {
+    "title": "Tools I Use",
+    "description": "A curated collection of development tools, IDEs, AI assistants, and platforms that power my workflow.",
+    "categories": {
+      "title": "Categories",
+      "ide": "IDE",
+      "versionControl": "Version Control",
+      "devopsPlatform": "DevOps Platform",
+      "containerization": "Containerization",
+      "aiAssistant": "AI Assistant",
+      "productivity": "Productivity",
+      "design": "Design",
+      "hardwareIot": "Hardware & IoT",
+      "database": "Database",
+      "deployment": "Deployment",
+      "networkingSecurity": "Networking & Security",
+      "apiClient": "API Client",
+      "browser": "Browser"
+    },
+    "footer": {
+      "note": "This list is constantly evolving as I discover new tools and technologies.",
+      "lastUpdated": "Last updated:"
+    },
+    "tools": {
+      "zed": {
+        "name": "Zed",
+        "description": "High-performance code editor built for real-time collaboration and speed."
+      },
+      "cursor": {
+        "name": "Cursor",
+        "description": "AI-enhanced VS Code fork that deeply understands your codebase for faster development."
+      },
+      "git": {
+        "name": "Git",
+        "description": "The backbone of modern development — distributed version control and collaboration."
+      },
+      "gitlab": {
+        "name": "GitLab",
+        "description": "Complete DevOps platform with Git hosting, CI/CD pipelines, and project management."
+      },
+      "docker": {
+        "name": "Docker",
+        "description": "Build, ship, and run applications consistently across environments with containers."
+      },
+      "geminiCli": {
+        "name": "Gemini CLI",
+        "description": "Open-source command-line AI assistant with a generous free tier — ideal for coding support."
+      },
+      "lmStudio": {
+        "name": "LM Studio",
+        "description": "Run and experiment with large language models locally on your machine with full control."
+      },
+      "affine": {
+        "name": "Affine",
+        "description": "Open-source Notion alternative — faster, more private, and built for offline-first workflows."
+      },
+      "figma": {
+        "name": "Figma",
+        "description": "Collaborative interface design platform that redefined modern design workflows."
+      },
+      "espIdf": {
+        "name": "ESP-IDF",
+        "description": "Espressif's official framework for ESP32 microcontrollers, from bare-metal to IoT solutions."
+      },
+      "kicad": {
+        "name": "KiCad",
+        "description": "Open-source suite for PCB design — from schematics to manufacturing-ready layouts."
+      },
+      "postgresql": {
+        "name": "PostgreSQL",
+        "description": "The world's most advanced open-source relational database with robust features and extensibility."
+      },
+      "vercel": {
+        "name": "Vercel",
+        "description": "Frontend cloud platform for seamless deployments, edge functions, and Next.js integration."
+      },
+      "cloudflare": {
+        "name": "Cloudflare",
+        "description": "DNS, CDN, registrar, and Zero Trust security — DNSSEC, DDoS protection, privacy-first resolver, and more."
+      },
+      "yaak": {
+        "name": "Yaak",
+        "description": "Local-first, Git-friendly API client for REST, GraphQL, WebSockets, SSE, and gRPC — fast, private, and extensible."
+      },
+      "orion": {
+        "name": "Orion",
+        "description": "Privacy-first WebKit browser by Kagi — zero telemetry, built-in ad/tracker blocking, and advanced privacy controls."
+      }
+    }
+  }
+}

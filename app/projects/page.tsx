@@ -1,7 +1,10 @@
-import { getAllProjects } from "@/api/get-all-projects";
+"use client";
+
 import ProjectCard from "@/components/project-card";
 import { ProjectsTable } from "@/components/projects/projects-table";
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
+import { useProjects } from "@/hooks/use-projects";
 import { ProjectMetadataType } from "@/lib/types";
 
 // Loading skeleton for the table
@@ -29,8 +32,6 @@ function calculateProjectStats(projects: ProjectMetadataType[]) {
   const allTech = projects.flatMap((p) => p.tech || []);
   const uniqueTech = [...new Set(allTech)].length;
 
-  // Calculate average project duration
-
   return {
     totalProjects,
     completedProjects,
@@ -39,11 +40,45 @@ function calculateProjectStats(projects: ProjectMetadataType[]) {
   };
 }
 
-export default async function ProjectsPage() {
-  const AllProjects = await getAllProjects();
-  const selectedProjects = AllProjects.filter((project) => project.selected);
-  const projects = AllProjects;
+export default function ProjectsPage() {
+  const t = useTranslations("ProjectsPage");
+  const { projects, loading, error } = useProjects();
 
+  if (loading) {
+    return (
+      <div className="container max-w-5xl mx-auto pt-10 md:px-0 border-x">
+        <div className="p-6 border-b">
+          <div className="h-8 bg-muted/50 rounded animate-pulse mb-4" />
+          <div className="h-4 bg-muted/50 rounded animate-pulse w-2/3" />
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0 border-b">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="p-4">
+              <div className="h-6 bg-muted/50 rounded animate-pulse mb-2" />
+              <div className="h-4 bg-muted/50 rounded animate-pulse" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container max-w-5xl mx-auto pt-10 md:px-0 border-x">
+        <div className="p-6 border-b">
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4 font-header">
+            {t("title")}
+          </h1>
+          <p className="text-lg text-red-500">
+            Error loading projects: {error}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const selectedProjects = projects.filter((project) => project.selected);
   const stats = calculateProjectStats(projects);
 
   return (
@@ -51,12 +86,11 @@ export default async function ProjectsPage() {
       {/* Header Section */}
       <div className="max-w-5xl mx-auto">
         <div className="p-6 border-b">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
-            Projects
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4 font-header">
+            {t("title")}
           </h1>
           <p className="text-lg text-foreground/70 max-w-2xl leading-relaxed">
-            A collection of projects I&apos;ve built — each one reflecting
-            creativity, problem-solving, and growth through code and design.
+            {t("description")}
           </p>
         </div>
 
@@ -67,7 +101,7 @@ export default async function ProjectsPage() {
               {stats.totalProjects}
             </div>
             <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Total Projects
+              {t("statistics.totalProjects")}
             </div>
           </div>
           <div className="border-r p-4 text-center hover:bg-accent/50 border-b lg:border-b-0">
@@ -75,7 +109,7 @@ export default async function ProjectsPage() {
               {stats.completedProjects}
             </div>
             <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Completed
+              {t("statistics.completedProjects")}
             </div>
           </div>
           <div className="border-r p-4 text-center hover:bg-accent/50 border-b lg:border-b-0">
@@ -83,7 +117,7 @@ export default async function ProjectsPage() {
               {stats.activeProjects}
             </div>
             <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Active
+              {t("statistics.activeProjects")}
             </div>
           </div>
           <div className="p-4 text-center border-r hover:bg-accent/50 lg:border-r-0">
@@ -91,7 +125,7 @@ export default async function ProjectsPage() {
               {stats.uniqueTech}
             </div>
             <div className="text-sm text-foreground/70 uppercase tracking-wide">
-              Technologies
+              {t("statistics.technologies")}
             </div>
           </div>
         </div>
@@ -100,8 +134,8 @@ export default async function ProjectsPage() {
       {/* Featured Projects Section */}
       {selectedProjects.length > 0 && (
         <div>
-          <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto py-4">
-            Featured Projects
+          <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto pt-5 pb-6 font-header">
+            {t("sections.featuredProjects")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
             {selectedProjects.map((project) => (
@@ -123,8 +157,8 @@ export default async function ProjectsPage() {
 
       {/* All Projects Section */}
       <div>
-        <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto py-4 border-b">
-          All Projects
+        <h3 className="uppercase text-foreground text-2xl md:text-4xl font-semibold text-center mx-auto pt-5 pb-6 border-b font-header">
+          {t("sections.allProjects")}
         </h3>
         <Suspense fallback={<TableSkeleton />}>
           <ProjectsTable projects={projects} />
@@ -133,5 +167,3 @@ export default async function ProjectsPage() {
     </div>
   );
 }
-
-export const dynamic = "force-static";

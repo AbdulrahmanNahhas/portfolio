@@ -18,20 +18,21 @@ export function NavPill({ item, isActive }: NavPillProps) {
           {item.label}
         </span>
       </span>
-      {isActive && (
+      {/* {isActive && (
         <span
           className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-3 h-3 rounded-full z-[4] bg-foreground/50"
           aria-hidden="true"
         />
-      )}
+      )} */}
     </>
   );
 
   const basePillClasses = cn(
-    "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border border-transparent border-l-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-6 py-2 transition-all duration-0",
+    "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-md border border-transparent border-l-border rtl:border-r-border bg-background text-foreground box-border font-medium text-sm leading-none uppercase tracking-wide whitespace-nowrap cursor-pointer px-5 py-2 transition-all duration-0",
     "hover:bg-accent/50 hover:text-accent-foreground",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-    isActive && "bg-accent text-accent-foreground border-foreground/25 border"
+    isActive &&
+      "bg-accent text-accent-foreground border-foreground/25 rtl:border-r-foreground/25 border font-bold"
   );
 
   const isExternalLink = (href: string) =>

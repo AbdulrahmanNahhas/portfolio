@@ -16,7 +16,7 @@ export function MobileHamburger({ isOpen, onToggle }: MobileHamburgerProps) {
       aria-label="Toggle menu"
       aria-expanded={isOpen}
       className={cn(
-        "md:hidden relative flex h-9 w-9 flex-col items-center justify-center gap-1 rounded-md border border-border bg-background p-0 transition-all duration-200",
+        "md:hidden relative flex size-10 flex-col items-center justify-center gap-1 rounded-md border border-border bg-background p-0 transition-all duration-200",
         "hover:bg-accent hover:text-accent-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "active:scale-95"

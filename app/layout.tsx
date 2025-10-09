@@ -3,7 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getLocale } from "next-intl/server";
 
+// English fonts
 const switzer = localFont({
   src: [
     {
@@ -101,15 +104,105 @@ const switzer = localFont({
   display: "swap",
 });
 
-const gulax = localFont({
+const plein = localFont({
   src: [
     {
-      path: "./fonts/Gulax/Gulax-Regular.otf",
+      path: "./fonts/plein/fonts/Plein-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-LightItalic.woff2",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-Regular.woff2",
       weight: "400",
       style: "normal",
     },
+    {
+      path: "./fonts/plein/fonts/Plein-Italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-MediumItalic.woff2",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-BoldItalic.woff2",
+      weight: "700",
+      style: "italic",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-Black.woff2",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "./fonts/plein/fonts/Plein-BlackItalic.woff2",
+      weight: "900",
+      style: "italic",
+    },
   ],
-  variable: "--font-gulax",
+  variable: "--font-plein",
+  display: "swap",
+});
+
+// Arabic fonts
+const lyonArabic = localFont({
+  src: [
+    {
+      path: "./fonts/Lyon_Arabic_Display/Lyon_Arabic_Display_Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lyon_Arabic_Display/Lyon_Arabic_Display_Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lyon_Arabic_Display/Lyon_Arabic_Display_Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lyon_Arabic_Display/Lyon_Arabic_Display_Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Lyon_Arabic_Display/Lyon_Arabic_Display_Black.otf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-lyon-arabic",
+  display: "swap",
+});
+
+const rubik = localFont({
+  src: [
+    {
+      path: "./fonts/Rubik-Variables.ttf",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-rubik",
   display: "swap",
 });
 
@@ -118,19 +211,28 @@ export const metadata: Metadata = {
   description: "Abdulrahman Nahhas | Portfolio",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
+  const locale = await getLocale();
+  const isRTL = locale === "ar";
+
+  // Font classes based on locale
+  const fontClasses = isRTL
+    ? `${rubik.variable} ${lyonArabic.variable}`
+    : `${switzer.variable} ${plein.variable}`;
+
   return (
-    <html lang="en">
-      <body
-        className={`${switzer.variable} ${gulax.variable} antialiased relative`}
-      >
-        <Header />
-        {children}
-        <Footer />
+    <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
+      <body className={`${fontClasses} antialiased relative`}>
+        <NextIntlClientProvider messages={messages}>
+          <Header />
+          {children}
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

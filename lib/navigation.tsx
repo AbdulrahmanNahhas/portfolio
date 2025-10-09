@@ -77,6 +77,45 @@ export const socialLinks: SocialLink[] = [
   },
 ];
 
+// Function to get translated navigation items
+export const getNavigationItems = (t: (key: string) => string): NavItem[] => [
+  { label: t("Navigation.home"), href: "/" },
+  { label: t("Navigation.work"), href: "/work" },
+  { label: t("Navigation.projects"), href: "/projects" },
+  {
+    label: t("Navigation.more"),
+    href: "/more",
+    subItems: [
+      {
+        label: t("Navigation.learningSkills"),
+        href: "/learning",
+        icon: "BookOpen",
+        disabled: true,
+      },
+      {
+        label: t("Navigation.toolsIUse"),
+        href: "/tools",
+        icon: "Wrench",
+        disabled: false,
+      },
+      {
+        label: t("Navigation.cvResume"),
+        href: "/cv",
+        icon: "FileText",
+        disabled: true,
+      },
+      {
+        label: t("Navigation.contactMe"),
+        href: "mailto:abdulrahmannahhas@gmail.com",
+        icon: "Mail",
+        external: true,
+        disabled: true,
+      },
+    ],
+  },
+];
+
+// Keep the original for backward compatibility (will be removed later)
 export const navigationItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Work", href: "/work" },

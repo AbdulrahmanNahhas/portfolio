@@ -37,7 +37,10 @@ const technologies = [
 
 const TechnologiesSection = () => {
   return (
-    <Marquee className="flex size-full items-center justify-center bg-background">
+    <Marquee
+      dir="ltr"
+      className="flex size-full items-center justify-center bg-background"
+    >
       <MarqueeFade side="left" />
       <MarqueeFade side="right" />
       <MarqueeContent>

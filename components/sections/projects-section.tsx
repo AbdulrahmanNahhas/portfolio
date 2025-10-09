@@ -1,9 +1,33 @@
-import { getAllProjects } from "@/api/get-all-projects";
-import ProjectCard from "@/components/project-card";
+"use client";
 
-const ProjectsSection = async () => {
-  const allProjects = await getAllProjects();
-  const featuredProjects = allProjects.filter((project) => project.selected);
+import ProjectCard from "@/components/project-card";
+import { useTranslations } from "next-intl";
+import { useProjects } from "@/hooks/use-projects";
+
+const ProjectsSection = () => {
+  const t = useTranslations("ProjectsPage");
+  const { projects, loading, error } = useProjects();
+
+  if (loading) {
+    return (
+      <section className="pt-5 border-t px-0">
+        <div className="flex flex-col gap-4">
+          <div className="h-12 bg-muted/50 rounded animate-pulse" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="h-32 bg-muted/50 rounded animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return null; // Don't show error in home page section
+  }
+
+  const featuredProjects = projects.filter((project) => project.selected);
 
   if (featuredProjects.length === 0) {
     return null;
@@ -12,9 +36,9 @@ const ProjectsSection = async () => {
   return (
     <section className="pt-5 border-t px-0">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-4">
-          <h3 className="uppercase text-foreground text-3xl md:text-6xl font-semibold text-center mx-auto">
-            Featured Projects
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-4 pb-3">
+          <h3 className="uppercase text-foreground text-3xl md:text-5xl font-semibold text-center mx-auto font-header">
+            {t("sections.featuredProjects")}
           </h3>
         </div>
 

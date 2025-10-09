@@ -17,6 +17,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 // Define status types and their corresponding colors
 type ProjectStatus =
@@ -26,36 +27,7 @@ type ProjectStatus =
   | "Completed"
   | "Archived";
 
-const statusConfig = {
-  Planning: {
-    label: "Planning",
-    color:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
-    description: "Project is in planning phase",
-  },
-  "In Development": {
-    label: "In Development",
-    color:
-      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
-    description: "Project is actively being developed",
-  },
-  "In Production": {
-    label: "In Production",
-    color:
-      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
-    description: "Project is live and being used",
-  },
-  Completed: {
-    label: "Completed",
-    color: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-    description: "Project is finished and no longer maintained",
-  },
-  Archived: {
-    label: "Archived",
-    color: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300",
-    description: "Project is no longer active",
-  },
-} as const;
+// Status configuration will be created dynamically with translations
 
 type FilterOption = "all" | "active" | "completed";
 type SortOption = "newest" | "oldest" | "name";
@@ -66,10 +38,43 @@ interface ProjectsTableProps {
 }
 
 export function ProjectsTable({ projects }: ProjectsTableProps) {
+  const t = useTranslations("ProjectsPage");
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<FilterOption>("all");
   const [sort, setSort] = useState<SortOption>("newest");
   const [viewMode, setViewMode] = useState<ViewMode>("cards");
+
+  // Create status configuration with translations
+  const statusConfig = {
+    Planning: {
+      label: t("projectStatus.planning"),
+      color:
+        "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
+      description: "Project is in planning phase",
+    },
+    "In Development": {
+      label: t("projectStatus.inDevelopment"),
+      color:
+        "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
+      description: "Project is actively being developed",
+    },
+    "In Production": {
+      label: t("projectStatus.inProduction"),
+      color:
+        "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+      description: "Project is live and being used",
+    },
+    Completed: {
+      label: t("projectStatus.completed"),
+      color: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+      description: "Project is finished and no longer maintained",
+    },
+    Archived: {
+      label: t("projectStatus.archived"),
+      color: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300",
+      description: "Project is no longer active",
+    },
+  } as const;
 
   // Filter and sort projects
   const filteredAndSortedProjects = useMemo(() => {
@@ -131,7 +136,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
         <div className="cursor-target relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search projects..."
+            placeholder={t("filters.searchPlaceholder")}
             className="pl-9 rounded-none bg-background border-0 border-b md:border-0 z-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -150,13 +155,13 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem className="cursor-target" value="all">
-                All
+                {t("filters.filterAll")}
               </SelectItem>
               <SelectItem className="cursor-target" value="active">
-                Active
+                {t("filters.filterActive")}
               </SelectItem>
               <SelectItem className="cursor-target" value="completed">
-                Completed
+                {t("filters.filterCompleted")}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -172,13 +177,13 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem className="cursor-target" value="newest">
-                Newest
+                {t("filters.sortNewest")}
               </SelectItem>
               <SelectItem className="cursor-target" value="oldest">
-                Oldest
+                {t("filters.sortOldest")}
               </SelectItem>
               <SelectItem className="cursor-target" value="name">
-                Name
+                {t("filters.sortName")}
               </SelectItem>
             </SelectContent>
           </Select>
@@ -243,7 +248,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                 href={`/projects/${project.slug}`}
                 className={borderClasses}
               >
-                <div className="flex items-start justify-end mb-0 absolute top-2.5 right-2.5">
+                <div className="flex items-start justify-end mb-0 absolute top-2.5 rtl:bottom-2.5 rtl:left-2.5">
                   <div className="text-xs text-muted-foreground">
                     {format(project.startDate, "MMM yyyy")}
                   </div>
@@ -282,8 +287,11 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <StatusBadge status={project.status as ProjectStatus} />
+                <div className="flex items-center gap-2 ">
+                  <StatusBadge
+                    status={project.status as ProjectStatus}
+                    statusConfig={statusConfig}
+                  />
                   <Badge variant="outline" className="text-xs">
                     {project.category}
                   </Badge>
@@ -335,9 +343,12 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <div className="flex items-center gap-2">
-                        <StatusBadge status={project.status as ProjectStatus} />
+                    <div className="flex items-start gap-3 flex-shrink-0">
+                      <div className="flex items-end gap-2 flex-col-reverse">
+                        <StatusBadge
+                          status={project.status as ProjectStatus}
+                          statusConfig={statusConfig}
+                        />
                         <Badge variant="outline" className="text-xs">
                           {project.category}
                         </Badge>
@@ -362,7 +373,16 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
   );
 }
 
-function StatusBadge({ status }: { status: ProjectStatus }) {
+function StatusBadge({
+  status,
+  statusConfig,
+}: {
+  status: ProjectStatus;
+  statusConfig: Record<
+    ProjectStatus,
+    { label: string; color: string; description: string }
+  >;
+}) {
   const config = statusConfig[status] || statusConfig.Archived;
 
   return (

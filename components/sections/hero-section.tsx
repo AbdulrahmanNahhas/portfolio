@@ -1,44 +1,53 @@
 import React from "react";
 import DecryptedText from "../react-bits/DecryptedText";
 import { siteConfig } from "../../lib/config";
+import { useTranslations, useLocale } from "next-intl";
 
 const HeroSection = () => {
+  const t = useTranslations("HeroSection");
+  const locale = useLocale();
+
   // Calculate age based on birthday
-  const calculateAge = (birthDate: string) => {
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
+  // const calculateAge = (birthDate: string) => {
+  //   const today = new Date();
+  //   const birth = new Date(birthDate);
+  //   let age = today.getFullYear() - birth.getFullYear();
+  //   const monthDiff = today.getMonth() - birth.getMonth();
 
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birth.getDate())
-    ) {
-      age--;
-    }
+  //   if (
+  //     monthDiff < 0 ||
+  //     (monthDiff === 0 && today.getDate() < birth.getDate())
+  //   ) {
+  //     age--;
+  //   }
 
-    return age;
-  };
+  //   return age;
+  // };
 
-  const age = calculateAge("2007-04-17");
+  // const age = calculateAge("2007-04-17");
 
   return (
     <section className="max-w-5xl mx-auto space-y-8 lg:px-0 border-y" id="home">
       <div className="text-left space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-start gap-0 lg:gap-4">
+          {/* Left Column */}
           <div className="space-y-4 p-6">
-            <p className="text-md text-lg md:text-3xl lg:text-lg text-foreground/70 shiny-white">
-              Hi, I&apos;m Abdulrahman Nahhas
+            <p className="text-md text-lg md:text-3xl lg:text-lg text-foreground/70 shiny-white rtl:w-[220px]">
+              {t("greeting")}
             </p>
-            <h1 className="text-foreground text-6xl sm:text-7xl md:text-8xl sm:uppercase lg:text-5xl font-medium text-pretty leading-none">
-              Student & <br /> Programmer
+            <h1 className="text-foreground text-6xl sm:text-7xl md:text-8xl sm:uppercase lg:text-5xl rtl:lg:!text-6xl font-bold text-pretty leading-none font-header">
+              {t("title").split(" & ")[0]}
+              {locale === "en" && <br />}
+              {t("title").split(" & ")[1]}
             </h1>
+
+            {/* Social Links */}
             <div className="flex justify-start gap-2 pt-3 md:pt-6">
               <a
                 target="_blank"
                 href={siteConfig.social.gitlab}
-                aria-label="GitLab"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                aria-label={t("ariaLabels.gitlab")}
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   role="img"
@@ -53,8 +62,8 @@ const HeroSection = () => {
               <a
                 target="_blank"
                 href={siteConfig.social.twitter}
-                aria-label="Twitter"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                aria-label={t("ariaLabels.twitter")}
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -68,8 +77,8 @@ const HeroSection = () => {
               <a
                 target="_blank"
                 href={siteConfig.social.email}
-                aria-label="Email"
-                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border  p-3 rounded-xl bg-black/20 hover:bg-white/10"
+                aria-label={t("ariaLabels.email")}
+                className="cursor-target text-foreground/70 hover:text-foreground transition duration-0 ease-in-out border p-3 rounded-xl bg-black/20 hover:bg-white/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -80,16 +89,19 @@ const HeroSection = () => {
                   <path
                     fill="currentColor"
                     d="m18.73 5.41l-1.28 1L12 10.46L6.55 6.37l-1.28-1A2 2 0 0 0 2 7.05v11.59A1.36 1.36 0 0 0 3.36 20h3.19v-7.72L12 16.37l5.45-4.09V20h3.19A1.36 1.36 0 0 0 22 18.64V7.05a2 2 0 0 0-3.27-1.64"
-                  ></path>
+                  />
                 </svg>
               </a>
             </div>
           </div>
-          <div className="text-lg text-justify sm:text-base md:text-lg !space-x-1 text-foreground/70 space-y-4 lg:pl-4 border-t lg:border-t-0 lg:border-l p-6">
+
+          {/* Right Column */}
+          <div className="text-lg h-full text-justify sm:text-base md:text-lg !space-x-1 text-foreground/70 space-y-4 lg:pl-4 border-t lg:border-t-0 ltr:lg:border-l rtl:lg:border-r p-6">
             <p>
-              Hello, I&apos;m{" "}
+              {t("introLine1")}{" "}
               <DecryptedText
-                text="Abdulrahman Nahhas"
+                key={`name-${locale}`}
+                text={t("name")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCD1234!?"
@@ -101,40 +113,13 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />
-              , a{" "}
-              <DecryptedText
-                text={age.toString()}
-                speed={100}
-                maxIterations={20}
-                characters="0123456789"
-                className="shiny-sec font-semibold"
-                parentClassName="all-letters"
-                encryptedClassName="encrypted"
-                animateOn="view"
-                revealDirection="start"
-                sequential={true}
-                useOriginalCharsOnly={true}
-              />
-              -year-old from Syria.
+              , {t("ageAndLocation")}
             </p>
             <p>
-              I&apos;m a{" "}
+              {t("bioLine1")} 👨‍💻 {t("passionateAbout")}{" "}
               <DecryptedText
-                text="student & developer"
-                speed={100}
-                maxIterations={20}
-                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz& "
-                className="revealed"
-                parentClassName="all-letters"
-                encryptedClassName="encrypted"
-                animateOn="view"
-                revealDirection="start"
-                sequential={true}
-                useOriginalCharsOnly={true}
-              />{" "}
-              👨‍💻 passionate about building both{" "}
-              <DecryptedText
-                text="web applications"
+                key={`webApps-${locale}`}
+                text={t("webApps")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
@@ -146,9 +131,10 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />{" "}
-              and{" "}
+              {t("and")}{" "}
               <DecryptedText
-                text="embedded systems"
+                key={`embeddedSystems-${locale}`}
+                text={t("embeddedSystems")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
@@ -160,13 +146,13 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />
-              . I combine my studies with projects that challenge me to grow as
-              a full-stack and systems developer.
+              {t("bioLine2")}
             </p>
             <p>
-              I enjoy working with{" "}
+              {t("enjoyLine")}{" "}
               <DecryptedText
-                text="modern technologies"
+                key={`modernTech-${locale}`}
+                text={t("modernTech")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
@@ -178,9 +164,10 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />{" "}
-              ⚡ — from{" "}
+              ⚡ {t("from")}{" "}
               <DecryptedText
-                text="Next.js"
+                key={`nextjs-${locale}`}
+                text={t("nextjs")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz."
@@ -192,9 +179,10 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />{" "}
-              to{" "}
+              {t("to")}{" "}
               <DecryptedText
-                text="ESP32 & IoT"
+                key={`esp32Iot-${locale}`}
+                text={t("esp32Iot")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz& "
@@ -206,9 +194,10 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />{" "}
-              — and creating{" "}
+              {t("andBuilding")}{" "}
               <DecryptedText
-                text="interactive"
+                key={`interactiveSolutions-${locale}`}
+                text={t("interactiveSolutions")}
                 speed={100}
                 maxIterations={20}
                 characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -220,20 +209,19 @@ const HeroSection = () => {
                 sequential={true}
                 useOriginalCharsOnly={true}
               />{" "}
-              solutions that make a difference. Beyond coding, I explore new
-              frameworks, contribute to open source, and dive deep into the
-              latest tech trends 🌟
+              {t("finalLine")} 🌟
             </p>
 
+            {/* Info Badges */}
             <div className="flex flex-wrap gap-2 pt-1">
               <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
-                📅 Born: April 17, 2007
+                📅 {t("born")}
               </span>
               <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
-                📍 Hims, Syria
+                📍 {t("location")}
               </span>
               <span className="bg-accent/50 border inline-flex items-center gap-1 px-3 py-1 text-accent-foreground rounded-full text-sm">
-                🎓 University Student
+                🎓 {t("status")}
               </span>
             </div>
           </div>

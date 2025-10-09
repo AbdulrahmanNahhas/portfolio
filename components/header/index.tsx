@@ -3,7 +3,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
-import { navigationItems, getActiveHref } from "@/lib/navigation";
+import { getNavigationItems, getActiveHref } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 import { LogoDropdown } from "./LogoDropdown";
 import { DesktopNavigation } from "./DesktopNavigation";
 import { MobileHamburger } from "./MobileHamburger";
@@ -12,11 +13,13 @@ import { MobileMenu } from "./MobileMenu";
 
 export default function Header() {
   const pathname = usePathname();
+  const t = useTranslations();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLogoDropdownOpen, setIsLogoDropdownOpen] = useState(false);
   const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
 
   const activeHref = getActiveHref(pathname);
+  const navigationItems = getNavigationItems(t);
 
   // Handle escape key
   useEffect(() => {
@@ -123,11 +126,11 @@ export default function Header() {
         transition={{ duration: 0 }}
       >
         <nav
-          className="w-full flex items-start justify-between box-border relative z-[1003]"
+          className="w-full flex items-start justify-between box-border relative z-[1003] font-header h-10"
           aria-label="Primary"
         >
           {/* Logo Section */}
-          <div className="">
+          <div className="relative">
             <LogoDropdown
               isOpen={isLogoDropdownOpen}
               onToggle={toggleLogoDropdown}

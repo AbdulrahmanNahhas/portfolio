@@ -8,7 +8,7 @@ const SkillsSection = () => {
   return (
     <section className="flex flex-col md:flex-row items-start gap-0 overflow-hidden border-t">
       <SkillsList />
-      <div className="flex justify-end w-full h-[350px] border-l">
+      <div className="flex justify-end w-full h-[350px] ltr:border-l rtl:border-r">
         <LetterGlitch
           glitchColors={["#008000", "#006400", "#013220"]}
           glitchSpeed={60}

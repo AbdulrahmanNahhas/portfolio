@@ -3,151 +3,161 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { MapPinIcon, ClockIcon } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import {
+  format,
+  formatDistanceToNow,
+  differenceInDays,
+  differenceInMonths,
+  differenceInYears,
+} from "date-fns";
+import { enUS, ar } from "date-fns/locale";
 
-// Work experience data - automatically calculates statistics
-const WORK_EXPERIENCES: WorkExperienceType[] = [
-  {
-    id: "1",
-    company: "NAVIGATE",
-    position: "Co-Founder & Chief Technology Officer (CTO)",
-    location: "Remote",
-    startDate: new Date("2025-10-01"),
-    description:
-      "Co-founded NAVIGATE, a Syrian consultancy that helps startups with business planning, digital tools, and technical solutions.",
-    responsibilities: [
-      "Led the technical side of the company, including websites, platforms, and infrastructure",
-      "Worked with founders to align technical solutions with business goals",
-    ],
-    type: "part-time",
-    current: true,
-    // companyUrl: "https://navigate-tech.com",
-    category: "Startup",
-    icon: "/work/navigate.png",
-  },
-  {
-    id: "2",
-    company: "New Syria Movement",
-    position: "Member",
-    location: "Syria",
-    startDate: new Date("2025-09-25"),
-    description:
-      "Joined the New Syria Movement, a political party in Syria that works on change and rebuilding the country’s future.",
-    responsibilities: [
-      "Participated as a regular member in discussions and community activities",
-    ],
-    type: "volunteer",
-    current: true,
-    companyUrl: "https://syriamovement.com",
-    category: "Other",
-    icon: "/work/New-Syria-Movement.jpg",
-  },
-  {
-    id: "3",
-    company: "Promise for Justice & Truth",
-    position: "Chief Technology Officer (CTO)",
-    location: "Homs, Syria",
-    startDate: new Date("2025-08-20"),
-    description:
-      "CTO at Promise for Justice & Truth, a human rights organization focused on documenting and addressing cases of detainees and the disappeared in Syria.",
-    responsibilities: [
-      "Built secure databases and digital infrastructure",
-      "Provided technical support for legal and research teams",
-    ],
-    highlights: ["Introduced digital security measures for sensitive records"],
-    type: "part-time",
-    current: true,
-    // companyUrl: "https://alwad.org",
-    category: "Non-profit",
-    icon: "/work/promise.png",
-  },
-  {
-    id: "4",
-    company: "Thabat Association",
-    position: "Technical & Media Lead (Volunteer)",
-    location: "Homs, Syria",
-    startDate: new Date("2024-08-01"),
-    description:
-      "Thabat – The Islamic Association for Da‘wah, Education, and Culture is a non-profit organization dedicated to Islamic education, cultural activities, and da‘wah. It focuses on spreading knowledge, providing educational programs, and supporting community development.",
-    responsibilities: [
-      "Managed technical systems and digital platforms",
-      "Led media production and digital presence",
-    ],
-    type: "volunteer",
-    current: true,
-    // companyUrl: "https://thabat.org",
-    category: "Non-profit",
-    icon: "/work/thabat.png",
-  },
-  {
-    id: "5",
-    company: "Joud Volunteers Team",
-    position: "Volunteer",
-    location: "Remote",
-    startDate: new Date("2023-02-01"),
-    endDate: new Date("2023-03-14"),
-    description:
-      "Volunteered with Joud Volunteers Team during the Turkey-Syria earthquake response in February 2023.",
-    responsibilities: [
-      "Assisted in distributing relief supplies and supporting affected families",
-    ],
-    type: "volunteer",
-    current: false,
-    companyUrl: "https://insanps.org",
-    category: "Non-profit",
-    icon: "/work/joud.png",
-  },
-  // {
-  //   id: "5",
-  //   company: "INSAN for Psychosocial Support",
-  //   position: "Volunteer",
-  //   location: "Istanbul, Turkey",
-  //   startDate: new Date("2023-02-01"),
-  //   endDate: new Date("2023-02-28"),
-  //   description:
-  //     "Volunteered with Insan for Psychosocial Support during the Turkey-Syria earthquake response in February 2023.",
-  //   responsibilities: [
-  //     "Assisted in distributing relief supplies and supporting affected families",
-  //   ],
-  //   type: "volunteer",
-  //   current: false,
-  //   companyUrl: "https://insanps.org",
-  //   category: "Non-profit",
-  //   icon: "/work/insanps.png",
-  // },
-];
+// Type for the translation function
+type TranslationFunction = {
+  (key: string): string;
+  raw: (key: string) => string[];
+};
+
+// Helper function to get date-fns locale
+function getDateLocale(locale: string) {
+  switch (locale) {
+    case "ar":
+      return ar;
+    case "en":
+    default:
+      return enUS;
+  }
+}
+
+// Function to translate work categories
+function translateCategory(category: string, t: TranslationFunction): string {
+  const categoryMap: Record<string, string> = {
+    Startup: t("workCategories.startup"),
+    "Political Party": t("workCategories.politicalParty"),
+    "Non-profit Organization": t("workCategories.nonProfitOrganization"),
+    "Non-profit Association": t("workCategories.nonProfitAssociation"),
+    Government: t("workCategories.government"),
+    Other: t("workCategories.other"),
+    Freelance: t("workCategories.freelance"),
+  };
+  return categoryMap[category] || category;
+}
+
+// Function to get work experiences with translations
+function getWorkExperiences(t: TranslationFunction): WorkExperienceType[] {
+  return [
+    {
+      id: "1",
+      company: t("experiences.navigate.company"),
+      position: t("experiences.navigate.position"),
+      location: t("experiences.navigate.location"),
+      startDate: new Date("2025-10-01"),
+      description: t("experiences.navigate.description"),
+      responsibilities: t.raw("experiences.navigate.responsibilities"),
+      type: "part-time",
+      current: true,
+      // companyUrl: "https://navigate-tech.com",
+      category: "Startup",
+      icon: "/work/navigate.png",
+    },
+    {
+      id: "2",
+      company: t("experiences.newSyriaMovement.company"),
+      position: t("experiences.newSyriaMovement.position"),
+      location: t("experiences.newSyriaMovement.location"),
+      startDate: new Date("2025-09-25"),
+      description: t("experiences.newSyriaMovement.description"),
+      responsibilities: t.raw("experiences.newSyriaMovement.responsibilities"),
+      type: "volunteer",
+      current: true,
+      companyUrl: "https://syriamovement.com",
+      category: "Political Party",
+      icon: "/work/New-Syria-Movement.jpg",
+    },
+    {
+      id: "3",
+      company: t("experiences.promiseForJustice.company"),
+      position: t("experiences.promiseForJustice.position"),
+      location: t("experiences.promiseForJustice.location"),
+      startDate: new Date("2025-08-20"),
+      description: t("experiences.promiseForJustice.description"),
+      responsibilities: t.raw("experiences.promiseForJustice.responsibilities"),
+      highlights: t.raw("experiences.promiseForJustice.highlights"),
+      type: "part-time",
+      current: true,
+      // companyUrl: "https://alwad.org",
+      category: "Non-profit Organization",
+      icon: "/work/promise.png",
+    },
+    {
+      id: "4",
+      company: t("experiences.thabat.company"),
+      position: t("experiences.thabat.position"),
+      location: t("experiences.thabat.location"),
+      startDate: new Date("2024-08-01"),
+      description: t("experiences.thabat.description"),
+      responsibilities: t.raw("experiences.thabat.responsibilities"),
+      type: "volunteer",
+      current: true,
+      companyUrl: "https://thabat.ngo",
+      category: "Non-profit Association",
+      icon: "/work/thabat.png",
+    },
+    {
+      id: "5",
+      company: t("experiences.joudVolunteers.company"),
+      position: t("experiences.joudVolunteers.position"),
+      location: t("experiences.joudVolunteers.location"),
+      startDate: new Date("2023-02-01"),
+      endDate: new Date("2023-03-14"),
+      description: t("experiences.joudVolunteers.description"),
+      responsibilities: t.raw("experiences.joudVolunteers.responsibilities"),
+      type: "volunteer",
+      current: false,
+      companyUrl: "",
+      category: "Non-profit Association",
+      icon: "/work/joud.png",
+    },
+  ];
+}
 
 /**
  * Formats a date to a readable string format (e.g., "Jan 2023")
  */
-function formatDate(date: Date): string {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-  });
+function formatDate(date: Date, locale: string): string {
+  const dateLocale = getDateLocale(locale);
+  return format(date, "MMM yyyy", { locale: dateLocale });
 }
 
 /**
  * Calculates the duration between two dates in a human-readable format
  */
-function calculateDuration(startDate: Date, endDate?: Date): string {
+function calculateDuration(
+  startDate: Date,
+  locale: string,
+  endDate?: Date
+): string {
   const end = endDate || new Date();
-  const diffTime = Math.abs(end.getTime() - startDate.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const dateLocale = getDateLocale(locale);
 
-  if (diffDays < 30) {
-    return `${diffDays} days`;
-  } else if (diffDays < 365) {
-    const months = Math.floor(diffDays / 30);
-    return `${months} month${months > 1 ? "s" : ""}`;
+  const days = differenceInDays(end, startDate);
+
+  if (days < 30) {
+    return formatDistanceToNow(startDate, {
+      addSuffix: false,
+      locale: dateLocale,
+    });
+  } else if (days < 365) {
+    return formatDistanceToNow(startDate, {
+      addSuffix: false,
+      locale: dateLocale,
+    });
   } else {
-    const years = Math.floor(diffDays / 365);
-    const remainingMonths = Math.floor((diffDays % 365) / 30);
-    if (remainingMonths > 0) {
-      return `${years} year${years > 1 ? "s" : ""} ${remainingMonths} month${
-        remainingMonths > 1 ? "s" : ""
-      }`;
-    }
-    return `${years} year${years > 1 ? "s" : ""}`;
+    return formatDistanceToNow(startDate, {
+      addSuffix: false,
+      locale: dateLocale,
+    });
   }
 }
 
@@ -168,8 +178,12 @@ function getWorkTypeColor(type: WorkType): string {
 
 function WorkExperienceCard({
   experience,
+  t,
+  locale,
 }: {
   experience: WorkExperienceType;
+  t: TranslationFunction;
+  locale: string;
 }) {
   return (
     <Card className="hover:bg-accent/5 transition-all duration-200 bg-background border-0 w-full border-b last:border-b-0">
@@ -231,6 +245,7 @@ function WorkExperienceCard({
                   <span>
                     {calculateDuration(
                       experience.startDate,
+                      locale,
                       experience.endDate
                     )}
                   </span>
@@ -247,14 +262,14 @@ function WorkExperienceCard({
                   experience.type
                 )} border text-xs font-medium px-3 py-1`}
               >
-                {experience.type.replace("-", " ")}
+                {t(`workTypes.${experience.type}`)}
               </Badge>
               {experience.category && (
                 <Badge
                   variant="secondary"
                   className="text-xs font-medium bg-green-700"
                 >
-                  {experience.category}
+                  {translateCategory(experience.category, t)}
                 </Badge>
               )}
               {experience.current && (
@@ -262,16 +277,16 @@ function WorkExperienceCard({
                   variant="secondary"
                   className="text-xs font-medium px-3 py-1 bg-amber-700"
                 >
-                  Current
+                  {t("badges.current")}
                 </Badge>
               )}
             </div>
             <div className="text-left sm:text-right lg:text-right">
               <p className="text-sm font-medium text-foreground">
-                {formatDate(experience.startDate)} -{" "}
+                {formatDate(experience.startDate, locale)} -{" "}
                 {experience.endDate
-                  ? formatDate(experience.endDate)
-                  : "Present"}
+                  ? formatDate(experience.endDate, locale)
+                  : t("dateFormat.present")}
               </p>
             </div>
           </div>
@@ -290,7 +305,7 @@ function WorkExperienceCard({
         {experience?.responsibilities?.length && (
           <div>
             <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
-              Key Responsibilities
+              {t("sections.keyResponsibilities")}
             </h4>
             <ul className="space-y-2">
               {experience.responsibilities.map((responsibility, index) => (
@@ -312,7 +327,7 @@ function WorkExperienceCard({
         {experience.highlights && experience.highlights.length > 0 && (
           <div>
             <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
-              Key Highlights
+              {t("sections.keyHighlights")}
             </h4>
             <ul className="space-y-2">
               {experience.highlights.map((highlight, index) => (
@@ -334,7 +349,7 @@ function WorkExperienceCard({
         {experience.achievements && experience.achievements.length > 0 && (
           <div>
             <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide mb-3">
-              Achievements
+              {t("sections.achievements")}
             </h4>
             <ul className="space-y-2">
               {experience.achievements.map((achievement, index) => (
@@ -363,7 +378,8 @@ function WorkExperienceCard({
  * - Number of current roles
  */
 function calculateWorkStatistics(
-  experiences: WorkExperienceType[]
+  experiences: WorkExperienceType[],
+  locale: "ar" | "en"
 ): WorkStatistics {
   const currentDate = new Date();
   const currentRoles = experiences.filter((exp) => exp.current).length;
@@ -379,19 +395,20 @@ function calculateWorkStatistics(
     )
   );
 
-  const diffTime = latestEndDate.getTime() - earliestStartDate.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30.44)); // More accurate month calculation
-  const diffYears = Math.floor(diffDays / 365.25); // Account for leap years
+  const diffYears = differenceInYears(latestEndDate, earliestStartDate);
+  const diffMonths = differenceInMonths(latestEndDate, earliestStartDate);
 
   let totalExperience: string;
   if (diffYears >= 2) {
-    totalExperience = `${diffYears}+ years`;
+    totalExperience = `${diffYears}+ ${locale === "ar" ? "سنوات" : "years"}`;
   } else if (diffYears === 1) {
-    const remainingMonths = Math.floor((diffDays % 365.25) / 30.44);
-    totalExperience = remainingMonths > 0 ? `1+ years` : `1 year`;
+    const remainingMonths = diffMonths % 12;
+    totalExperience =
+      remainingMonths > 0
+        ? `1+ ${locale === "ar" ? "شهر" : "months"}`
+        : `1 ${locale === "ar" ? "شهر" : "month"}`;
   } else {
-    totalExperience = `${diffMonths} months`;
+    totalExperience = `${diffMonths} ${locale === "ar" ? "شهر" : "months"}`;
   }
 
   return {
@@ -405,8 +422,14 @@ function calculateWorkStatistics(
 }
 
 export default function WorkPage() {
+  const t = useTranslations("WorkPage");
+  const locale = useLocale();
+
+  // Get work experiences with translations
+  const workExperiences = getWorkExperiences(t);
+
   // Sort work experiences by start date (latest first)
-  const sortedExperiences = [...WORK_EXPERIENCES].sort((a, b) => {
+  const sortedExperiences = [...workExperiences].sort((a, b) => {
     // If one is current and the other isn't, current comes first
     if (a.current && !b.current) return -1;
     if (!a.current && b.current) return 1;
@@ -416,21 +439,21 @@ export default function WorkPage() {
   });
 
   // Calculate statistics automatically
-  const statistics = calculateWorkStatistics(WORK_EXPERIENCES);
+  const statistics = calculateWorkStatistics(
+    workExperiences,
+    locale as "ar" | "en"
+  );
 
   return (
     <div className="min-h-screen bg-background pt-10">
       {/* Header Section */}
       <div className="max-w-5xl mx-auto border-x border-t">
         <div className="p-6 border-b">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 uppercase">
-            Work Experience
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 uppercase font-header">
+            {t("title")}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            A journey through my professional experience, from humanitarian work
-            during crisis response to building platforms for justice and
-            education. Each role has shaped my commitment to using technology
-            for meaningful impact.
+            {t("description")}
           </p>
         </div>
 
@@ -440,19 +463,25 @@ export default function WorkPage() {
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.totalExperience}
             </div>
-            <div className="text-sm text-muted-foreground">Experience</div>
+            <div className="text-sm text-muted-foreground">
+              {t("statistics.experience")}
+            </div>
           </div>
           <div className="border-r p-4 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.organizations}
             </div>
-            <div className="text-sm text-muted-foreground">Organizations</div>
+            <div className="text-sm text-muted-foreground">
+              {t("statistics.organizations")}
+            </div>
           </div>
           <div className="p-4 text-center hover:bg-accent/50">
             <div className="text-2xl font-bold text-foreground mb-1">
               {statistics.currentRoles}
             </div>
-            <div className="text-sm text-muted-foreground">Current Roles</div>
+            <div className="text-sm text-muted-foreground">
+              {t("statistics.currentRoles")}
+            </div>
           </div>
         </div>
       </div>
@@ -460,7 +489,12 @@ export default function WorkPage() {
       {/* Work Experiences */}
       <div className="max-w-5xl mx-auto border-x border-b mb-1">
         {sortedExperiences.map((experience) => (
-          <WorkExperienceCard key={experience.id} experience={experience} />
+          <WorkExperienceCard
+            key={experience.id}
+            experience={experience}
+            t={t}
+            locale={locale}
+          />
         ))}
       </div>
     </div>
