@@ -41,7 +41,8 @@ const ProjectBanner = ({
             <Image
               className={cn(
                 "rounded-sm size-14 p-1 bg-background border aspect-square",
-                iconSize === "fit" ? "p-0 bg-red-500" : "p-1 bg-white"
+                iconSize === "fit" ? "p-0 bg-red-500" : "p-1 bg-white",
+                iconSize === "rounded" && "p-0 bg-transparent rounded-full"
               )}
               src={
                 icon ||

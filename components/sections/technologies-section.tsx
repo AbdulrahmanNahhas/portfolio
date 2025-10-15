@@ -59,7 +59,7 @@ const TechnologiesSection = () => {
                   className="flex items-center gap-2 group transition-all duration-0 hover:bg-accent/50 py-4 px-6"
                 >
                   <IconComponent className="h-7 w-7 transition-transform group-hover:scale-110 opacity-60" />
-                  <span className="text-lg font-medium text-[var(--white-icon)]">
+                  <span className="text-lg font-medium text-[var(--white-icon)] w-full">
                     {tech.name.charAt(0).toUpperCase() + tech.name.slice(1)}
                   </span>
                 </Link>

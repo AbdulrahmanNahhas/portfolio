@@ -38,7 +38,7 @@ export function LogoDropdown({ isOpen, onToggle }: LogoDropdownProps) {
     >
       <AnimatePresence mode="wait">
         {!isOpen ? (
-          <span className="text-xl font-bold tracking-wider text-foreground select-none font-header px-3 line-clamp-1 text-start ">
+          <span className="text-xl font-bold ltr:tracking-wider rtl:tracking-normal text-foreground select-none font-header px-3 line-clamp-1 text-start ">
             {t("logo")}
           </span>
         ) : (

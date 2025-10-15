@@ -248,7 +248,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                 href={`/projects/${project.slug}`}
                 className={borderClasses}
               >
-                <div className="flex items-start justify-end mb-0 absolute top-2.5 rtl:bottom-2.5 rtl:left-2.5">
+                <div className="flex items-start justify-end mb-0 top-2.5 right-2.5">
                   <div className="text-xs text-muted-foreground">
                     {format(project.startDate, "MMM yyyy")}
                   </div>
@@ -259,7 +259,9 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                     <div
                       className={cn(
                         "size-8 rounded-sm border bg-white p-1 flex items-center justify-center flex-shrink-0",
-                        project.iconSize === "fit" && "p-0 bg-transparent"
+                        project.iconSize === "fit" && "p-0 bg-transparent",
+                        project.iconSize === "rounded" &&
+                          "p-0 bg-transparent rounded-full overflow-hidden"
                       )}
                     >
                       <Image
@@ -313,7 +315,9 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                   <div
                     className={cn(
                       "size-10 rounded-lg border bg-white p-1 flex items-center justify-center flex-shrink-0",
-                      project.iconSize === "fit" && "p-0 bg-transparent"
+                      project.iconSize === "fit" && "p-0 bg-transparent",
+                      project.iconSize === "rounded" &&
+                        "p-0 bg-transparent rounded-full"
                     )}
                   >
                     <Image

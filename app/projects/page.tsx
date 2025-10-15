@@ -142,6 +142,7 @@ export default function ProjectsPage() {
               <ProjectCard
                 key={project.slug}
                 slug={project.slug}
+                color={project.color}
                 title={project.title}
                 description={project.description}
                 icon={project.icon}

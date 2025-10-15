@@ -10,6 +10,7 @@ const ProjectCard = ({
   description,
   image,
   slug,
+  color,
   iconSize,
   category,
   tech,
@@ -18,6 +19,7 @@ const ProjectCard = ({
   title: string;
   description?: string;
   icon?: string;
+  color?: string;
   iconSize?: string;
   image?: string;
   category?: string;
@@ -26,30 +28,54 @@ const ProjectCard = ({
   return (
     <Link
       href={`/projects/${slug}`}
-      className="cursor-target group p-0 overflow-hidden flex flex-col gap-0 justify-between border rounded-none hover:bg-accent/50 transition-colors duration-0"
+      className={cn(
+        "cursor-target group p-0 overflow-hidden flex flex-col gap-0 justify-between border rounded-none transition-colors duration-0 hover:bg-accent/50"
+      )}
+      style={{
+        backgroundColor: color ? `rgba(${color}, 0.25)` : undefined,
+        borderColor: color ? `rgba(${color}, 0.25)` : undefined,
+      }}
     >
       {/* Icon */}
       {image && (
         <div className="flex-shrink-0">
           <div
             className={cn(
-              "w-full aspect-video overflow-hidden border p-0 flex items-center justify-center",
+              "w-full aspect-video overflow-hidden border-0 p-0 flex items-center justify-center bg-white",
               iconSize === "fit" && "p-1 bg-transparent"
             )}
           >
-            <Image
-              src={image}
-              alt={title}
-              width={1500}
-              height={1500}
-              className="w-full h-full object-cover"
-            />
+            {icon ? (
+              <div className="flex-shrink-0">
+                <div
+                  className={cn(
+                    "size-42 rounded-lg border-0 bg-white p-2 flex items-center justify-center"
+                  )}
+                >
+                  <Image
+                    src={icon}
+                    alt={title}
+                    width={168}
+                    height={168}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Image
+                src={image}
+                alt={title}
+                width={1500}
+                height={1500}
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
         </div>
       )}
       <div className="flex items-start gap-4 p-4">
         {/* Icon */}
-        {icon && (
+        {/* {icon && (
           <div className="flex-shrink-0">
             <div
               className={cn(
@@ -66,7 +92,7 @@ const ProjectCard = ({
               />
             </div>
           </div>
-        )}
+        )} */}
 
         {/* Content */}
         <div className="flex-1 min-w-0">

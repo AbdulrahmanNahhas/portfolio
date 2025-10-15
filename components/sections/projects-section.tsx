@@ -47,6 +47,7 @@ const ProjectsSection = () => {
             <ProjectCard
               key={project.slug}
               slug={project.slug}
+              color={project.color}
               title={project.title}
               description={project.description}
               icon={project.icon}

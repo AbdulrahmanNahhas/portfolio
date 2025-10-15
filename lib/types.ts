@@ -9,6 +9,7 @@ export type ProjectMetadataType = {
   startDate: Date;
   endDate?: Date;
   selected?: boolean;
+  color?: string;
   links: {
     website: string;
     repository: string;
