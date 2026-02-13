@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { NavItem } from "@/lib/navigation";
 import { MobileLanguageToggle } from "./MobileLanguageToggle";
@@ -32,7 +31,7 @@ export function MobileMenu({
       {isOpen && (
         <motion.div
           className={cn(
-            "md:hidden absolute top-14 left-0 right-0 z-[1002]",
+            "md:hidden absolute top-14 left-0 right-0 z-100",
             "bg-card border border-border rounded-lg shadow-lg",
             "mx-4 origin-top"
           )}
@@ -73,7 +72,7 @@ export function MobileMenu({
                           "hover:bg-accent hover:text-accent-foreground",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                           isMoreDropdownOpen &&
-                            "bg-accent text-accent-foreground"
+                          "bg-accent text-accent-foreground"
                         )}
                         onClick={(e) => {
                           e.preventDefault();
@@ -83,7 +82,7 @@ export function MobileMenu({
                         }}
                       >
                         <span>{item.label}</span>
-                        <ChevronDown
+                        <CaretDownIcon
                           className={cn(
                             "h-4 w-4 transition-transform duration-200",
                             isMoreDropdownOpen && "rotate-180"

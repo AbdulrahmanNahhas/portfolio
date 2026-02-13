@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "base-lyra",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -10,7 +10,10 @@
     "cssVariables": true,
     "prefix": ""
   },
-  "iconLibrary": "lucide",
+  "iconLibrary": "phosphor",
+  "rtl": true,
+  "menuColor": "inverted",
+  "menuAccent": "subtle",
   "aliases": {
     "components": "@/components",
     "utils": "@/lib/utils",
@@ -18,5 +21,9 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@react-bits": "https://reactbits.dev/r/{name}.json",
+    "@joyco": "https://registry.joyco.studio/r/{name}.json",
+    "@cardcn": "https://cardcn.dev/r/{name}.json"
+  }
 }

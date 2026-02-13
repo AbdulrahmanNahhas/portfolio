@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getLocale } from "next-intl/server";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // English fonts
 const switzer = localFont({
@@ -103,7 +104,6 @@ const switzer = localFont({
   variable: "--font-switzer",
   display: "swap",
 });
-
 const plein = localFont({
   src: [
     {
@@ -160,7 +160,6 @@ const plein = localFont({
   variable: "--font-plein",
   display: "swap",
 });
-
 // Arabic fonts
 const lyonArabic = localFont({
   src: [
@@ -193,7 +192,6 @@ const lyonArabic = localFont({
   variable: "--font-lyon-arabic",
   display: "swap",
 });
-
 const rubik = localFont({
   src: [
     {
@@ -211,7 +209,7 @@ export const metadata: Metadata = {
   description: "Abdulrahman Nahhas | Portfolio",
 };
 
-export default async function RootLayout({
+async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -225,15 +223,27 @@ export default async function RootLayout({
     ? `${rubik.variable} ${lyonArabic.variable}`
     : `${switzer.variable} ${plein.variable}`;
 
+
   return (
-    <html lang={locale} dir={isRTL ? "rtl" : "ltr"}>
+    <html lang={locale} dir={isRTL ? "rtl" : "ltr"} suppressHydrationWarning>
       <body className={`${fontClasses} antialiased relative`}>
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          {children}
-          <Footer />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <main className="pt-12">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>
   );
 }
+
+export default RootLayout;
