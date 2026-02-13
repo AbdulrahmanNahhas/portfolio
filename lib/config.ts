@@ -2,15 +2,16 @@ export const siteConfig = {
   // Contact Information
   contact: {
     email: "nahhas909@proton.com",
-    phone: "+963 XXX XXX XXX", // Update with your actual phone
+    phone: "+963 XXX XXX XXX",
     location: "Hims, Syria",
   },
 
   // Social Media Links
   social: {
     gitlab: "https://gitlab.com/AbdulrahmanNahhas",
-    twitter: "https://x.com/nahhas_tech",
-    email: "mailto:nahhas909@proton.com", // Will be generated from contact.email
+    mastodon: "https://mastodon.social/@nahhas@mastodon.social",
+    linkedin: "https://linkedin.com/in/abdulrahman-nahhas",
+    matrix: "https://matrix.to/#/@nahhas:matrix.org",
   },
 
   // Website Configuration

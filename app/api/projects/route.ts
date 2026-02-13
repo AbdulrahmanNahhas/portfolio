@@ -1,4 +1,4 @@
-import { getAllProjects } from "@/api/get-all-projects";
+import { getAllProjects } from "@/app/api/get-all-projects";
 import { NextResponse } from "next/server";
 
 export async function GET() {

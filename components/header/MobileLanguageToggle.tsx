@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronDown, LanguagesIcon } from "lucide-react";
+import { CaretDownIcon, TranslateIcon } from "@phosphor-icons/react";
 import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
@@ -100,13 +100,13 @@ export function MobileLanguageToggle({ onClose }: MobileLanguageToggleProps) {
             role="img"
             aria-label={`${currentLanguage.name} flag`}
           >
-            <LanguagesIcon className=" size-4" />
+            <TranslateIcon className=" size-4" />
           </span>
           <div className="flex items-center gap-2">
             <span>{t("selector")}</span>
           </div>
         </div>
-        <ChevronDown
+        <CaretDownIcon
           className={cn(
             "h-4 w-4 transition-transform duration-200",
             isOpen && "rotate-180"

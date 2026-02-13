@@ -1,7 +1,7 @@
-import React, { ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { cn } from "./lib/utils";
-import { Tree, Folder, File, CollapseButton } from "@/components/ui/file-tree";
+// import { Tree, Folder, File, CollapseButton } from "@/components/ui/file-tree";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -107,10 +107,10 @@ export const components = {
       </tbody>
     </table>
   ),
-  Tree,
-  Folder,
-  File,
-  CollapseButton,
+  // Tree,
+  // Folder,
+  // File,
+  // CollapseButton,
   blockquote: (props: BlockquoteProps) => (
     <blockquote
       className="ml-[0.075em] border-l-3 pl-4 border text-muted-foreground"

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronDown, BookOpen, Wrench, FileText, Mail } from "lucide-react";
+import { CaretDownIcon, BookOpenIcon, WrenchIcon, FileTextIcon, EnvelopeSimpleIcon } from "@phosphor-icons/react";
 import { NavItem } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
@@ -14,10 +14,10 @@ interface MoreDropdownProps {
 }
 
 const iconMap = {
-  BookOpen,
-  Wrench,
-  FileText,
-  Mail,
+  BookOpenIcon,
+  WrenchIcon,
+  FileTextIcon,
+  EnvelopeSimpleIcon,
 };
 
 export function MoreDropdown({
@@ -96,7 +96,7 @@ export function MoreDropdown({
           whileTap={{ scale: 0.99 }}
         >
           <span className="flex items-center gap-1">
-            <ChevronDown
+            <CaretDownIcon
               className={cn(
                 "size-4 transition-transform duration-200",
                 isOpen && "rotate-180"
