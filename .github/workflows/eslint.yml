@@ -5,8 +5,6 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  schedule:
-    - cron: '43 14 * * 6'
 
 jobs:
   eslint:
@@ -20,29 +18,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          bun-version: latest
+          version: 9 # Adjust to your local pnpm version if different
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Install Dependencies
-        # This will install ESLint 9.35.0 (which your project already uses)
-        # It won't crash because it respects your Next.js requirements.
-        run: bun install
+        run: pnpm install
 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        # We use bunx to run the ESLint version already inside your project.
-        # We use the correct modern formatter name.
+        # We call the formatter by its package name. 
+        # ESLint 9 will find it in node_modules automatically.
         run: |
-          bunx eslint . \
+          pnpm exec eslint . \
             --format @microsoft/eslint-formatter-sarif \
             --output-file eslint-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
-        uses: github/codeql-action/upload-sarif@v3
+        # Updated to v4 to fix the deprecation warning
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
