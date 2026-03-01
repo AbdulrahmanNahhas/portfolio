@@ -21,7 +21,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9 # Adjust to your local pnpm version if different
+          version: 9
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,13 +30,11 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        # We call the formatter by its package name. 
-        # ESLint 9 will find it in node_modules automatically.
         run: |
           pnpm exec eslint . \
             --format @microsoft/eslint-formatter-sarif \
@@ -44,7 +42,6 @@ jobs:
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
-        # Updated to v4 to fix the deprecation warning
         uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: eslint-results.sarif

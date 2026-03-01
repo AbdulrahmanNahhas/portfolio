@@ -40,6 +40,7 @@
     "vaul": "^1.1.2"
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^20.19.33",
     "@types/react": "19.2.13",
